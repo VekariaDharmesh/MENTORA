@@ -164,7 +164,10 @@ class StudentResponse(Base):
 class MediaJob(Base):
     __tablename__ = "media_jobs"
     id = Column(String, primary_key=True, default=generate_uuid)
+    lesson_id = Column(String, nullable=True)
     segment_id = Column(String, ForeignKey("lesson_segments.id"), nullable=True)
+    provider = Column(String, default="heygen")
+    provider_job_id = Column(String, nullable=True)
     status = Column(String, default="QUEUED")
     stage = Column(String, default="SCRIPT")
     progress = Column(Integer, default=0)
@@ -174,4 +177,7 @@ class MediaJob(Base):
     video_url = Column(String, nullable=True)
     error_message = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    started_at = Column(DateTime, nullable=True)
+    completed_at = Column(DateTime, nullable=True)
+
 

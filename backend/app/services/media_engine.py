@@ -1,171 +1,168 @@
 import os
 import asyncio
-import subprocess
 import logging
-from typing import Dict, Any
+from typing import Dict, Any, Optional
+from datetime import datetime
 from uuid import uuid4
+from sqlalchemy.orm import Session
+from app.db.session import SessionLocal
+from app.db.models import MediaJob
+from app.providers.video.heygen import HeyGenVideoProvider
 
 logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO)
 
 class MediaEngineService:
     def __init__(self):
-        self.jobs: Dict[str, Dict[str, Any]] = {}
-        self.tts_api_key = os.getenv("TTS_API_KEY")
-        self.avatar_api_key = os.getenv("AVATAR_API_KEY")
+        self.video_provider = HeyGenVideoProvider()
+        # Fallback values
+        self.default_avatar_id = os.getenv("HEYGEN_AVATAR_ID", "default_avatar")
+        self.default_voice_id = os.getenv("HEYGEN_VOICE_ID", "default_voice")
 
-    async def _process_video_job(self, job_id: str, text: str):
-        job = self.jobs[job_id]
+    def _update_job(self, job_id: str, updates: Dict[str, Any]):
+        db: Session = SessionLocal()
         try:
-            # SCRIPT
-            job["stage"] = "SCRIPT"
-            job["progress"] = 10
-            await asyncio.sleep(0.5)
-            logger.info(f"[VIDEO] job={job_id} [SCRIPT] completed")
+            job = db.query(MediaJob).filter(MediaJob.id == job_id).first()
+            if job:
+                for key, value in updates.items():
+                    setattr(job, key, value)
+                db.commit()
+        finally:
+            db.close()
 
-            # TTS
-            job["stage"] = "TTS"
-            job["progress"] = 20
-            logger.info(f"[VIDEO] job={job_id} [TTS] started")
+    async def _process_video_job(self, job_id: str, text: str, avatar_id: str, voice_id: str):
+        db: Session = SessionLocal()
+        try:
+            # 1. Update status to STARTED
+            self._update_job(job_id, {
+                "status": "PROCESSING",
+                "stage": "VIDEO_SUBMISSION",
+                "started_at": datetime.utcnow()
+            })
             
-            if not self.tts_api_key or self.tts_api_key == "your_tts_api_key":
-                error_msg = "TTS Provider Error: Invalid or missing API key."
-                logger.error(f"[VIDEO ERROR] stage=TTS provider=elevenlabs status=401 message={error_msg}")
-                raise Exception(error_msg)
+            # 2. Call HeyGen Provider
+            logger.info(f"Submitting job {job_id} to HeyGen provider...")
+            provider_job_id = await self.video_provider.create_video(
+                text=text,
+                avatar_id=avatar_id,
+                voice_id=voice_id
+            )
             
-            # (In a real scenario, we would call the TTS API here using httpx)
-            await asyncio.sleep(1)
-            job["audio_url"] = f"/assets/audio/{job_id}.mp3"
-            logger.info(f"[VIDEO] job={job_id} [TTS] completed")
-
-            # VISUAL
-            job["stage"] = "VISUAL"
-            job["progress"] = 40
-            await asyncio.sleep(0.5)
-            job["visual_url"] = f"/assets/visuals/{job_id}.svg"
-            logger.info(f"[VIDEO] job={job_id} [VISUAL] completed")
-
-            # AVATAR
-            job["stage"] = "AVATAR"
-            job["progress"] = 60
-            logger.info(f"[VIDEO] job={job_id} [AVATAR] job=abc123")
+            self._update_job(job_id, {
+                "provider_job_id": provider_job_id,
+                "stage": "VIDEO_RENDERING",
+                "progress": 10
+            })
             
-            if not self.avatar_api_key or self.avatar_api_key == "your_avatar_api_key":
-                error_msg = "Avatar Provider Error: Invalid or missing API key."
-                logger.error(f"[VIDEO ERROR] stage=AVATAR provider=heygen status=401 message={error_msg}")
-                raise Exception(error_msg)
-
-            await asyncio.sleep(1.5)
-            job["avatar_url"] = f"/assets/avatar/{job_id}.mp4"
-            logger.info(f"[VIDEO] job={job_id} [AVATAR] completed")
-
-            # COMPOSE
-            job["stage"] = "COMPOSE"
-            job["progress"] = 80
-            logger.info(f"[VIDEO] job={job_id} [COMPOSE] started")
+            # 3. Poll for completion (Hackathon fallback for webhooks)
+            max_attempts = 60 # 60 * 5s = 5 mins
+            for attempt in range(max_attempts):
+                await asyncio.sleep(5)
+                
+                status_data = await self.video_provider.get_video_status(provider_job_id)
+                status = status_data["status"]
+                progress = status_data.get("progress", 10)
+                
+                if status == "COMPLETED":
+                    self._update_job(job_id, {
+                        "status": "READY",
+                        "stage": "READY",
+                        "progress": 100,
+                        "video_url": status_data.get("video_url"),
+                        "completed_at": datetime.utcnow()
+                    })
+                    logger.info(f"Job {job_id} COMPLETED successfully.")
+                    return
+                elif status == "FAILED":
+                    raise Exception(status_data.get("error_message", "Provider failed during rendering"))
+                else:
+                    self._update_job(job_id, {
+                        "progress": progress
+                    })
+                    
+            raise Exception("Video generation timed out after 5 minutes")
             
-            # Check ffmpeg
-            try:
-                subprocess.run(["ffmpeg", "-version"], capture_output=True, check=True)
-            except Exception as e:
-                error_msg = "FFmpeg is not available for composition."
-                logger.error(f"[VIDEO ERROR] stage=COMPOSE provider=system status=500 message={error_msg}")
-                raise Exception(error_msg)
-
-            await asyncio.sleep(1)
-            job["video_url"] = f"/assets/video/{job_id}.mp4"
-            logger.info(f"[VIDEO] job={job_id} [COMPOSE] completed")
-
-            # UPLOAD & READY
-            job["stage"] = "UPLOAD"
-            job["progress"] = 90
-            await asyncio.sleep(0.5)
-            logger.info(f"[VIDEO] job={job_id} [STORAGE] uploaded")
-
-            job["stage"] = "READY"
-            job["status"] = "READY"
-            job["progress"] = 100
-            logger.info(f"[VIDEO] job={job_id} [VIDEO] READY")
-
         except Exception as e:
-            # Fallback handling
+            logger.error(f"Video job {job_id} failed: {e}")
             self.fallback_to_audio_only(job_id, str(e))
+        finally:
+            db.close()
 
-    def synthesize_voice(self, text: str, language: str = "Hinglish", voice_id: str = "dr_aris_calm") -> Dict[str, Any]:
+    def synthesize_voice(self, text: str, language: str = "Hinglish", voice_id: str = None) -> Dict[str, Any]:
         """
-        Synthesizes voice segment with status tracking and playback URL.
+        Creates a new MediaJob in the DB and kicks off the background HeyGen generation task.
         """
         job_id = f"job-{uuid4().hex[:8]}"
-        job_record = {
-            "id": job_id,
-            "job_id": job_id,
-            "status": "PROCESSING",
-            "stage": "PREPARING",
-            "progress": 0,
-            "error_message": None,
-            "audio_url": None,
-            "avatar_url": None,
-            "visual_url": None,
-            "video_url": None,
-            "language": language,
-            "voice_id": voice_id,
-            "text": text,
-            "fallback_active": False
-        }
-        self.jobs[job_id] = job_record
         
-        # Start background task
-        asyncio.create_task(self._process_video_job(job_id, text))
+        v_id = voice_id or self.default_voice_id
+        a_id = self.default_avatar_id
+        
+        db: Session = SessionLocal()
+        try:
+            new_job = MediaJob(
+                id=job_id,
+                status="QUEUED",
+                stage="SCRIPT",
+                progress=0
+            )
+            db.add(new_job)
+            db.commit()
+            db.refresh(new_job)
+            
+            job_record = {
+                "id": new_job.id,
+                "job_id": new_job.id,
+                "status": new_job.status,
+                "stage": new_job.stage,
+                "progress": new_job.progress
+            }
+        finally:
+            db.close()
+            
+        # Start background task to hit HeyGen API
+        asyncio.create_task(self._process_video_job(job_id, text, a_id, v_id))
+        
         return job_record
 
-    def get_job_status(self, job_id: str) -> Dict[str, Any]:
-        return self.jobs.get(job_id)
+    def get_job_status(self, job_id: str) -> Optional[Dict[str, Any]]:
+        db: Session = SessionLocal()
+        try:
+            job = db.query(MediaJob).filter(MediaJob.id == job_id).first()
+            if not job:
+                return None
+            return {
+                "id": job.id,
+                "job_id": job.id,
+                "status": job.status,
+                "stage": job.stage,
+                "progress": job.progress,
+                "video_url": job.video_url,
+                "audio_url": job.audio_url,
+                "visual_url": job.visual_url,
+                "error_message": job.error_message
+            }
+        finally:
+            db.close()
 
     def fallback_to_audio_only(self, job_id: str, error_reason: str = "Video timeout") -> Dict[str, Any]:
         """
         Graceful degradation: fall back to synchronized audio + dynamic visual canvas + captions.
+        Updates the DB record accordingly.
         """
-        record = self.jobs.get(job_id)
-        if not record:
-            return None
-
-        record["status"] = "FALLBACK_AUDIO_ONLY"
-        record["stage"] = "READY"
-        record["fallback_active"] = True
-        record["error_message"] = error_reason
+        updates = {
+            "status": "FALLBACK_AUDIO_ONLY",
+            "stage": "READY",
+            "progress": 100,
+            "error_message": error_reason,
+            "audio_url": f"/assets/audio/fallback_{job_id}.mp3",
+            "visual_url": f"/assets/visuals/fallback_{job_id}.svg"
+        }
+        self._update_job(job_id, updates)
         
-        # Ensure we have at least fallback URLs so the player can continue
-        record["audio_url"] = f"/assets/audio/fallback_{job_id}.mp3"
-        record["visual_url"] = f"/assets/visuals/fallback_{job_id}.svg"
-        
-        return record
+        return self.get_job_status(job_id)
 
     def get_health(self) -> Dict[str, str]:
-        import shutil
-        
-        # Determine TTS status
-        tts_key = os.getenv("TTS_API_KEY", "")
-        tts_ready = "ready" if tts_key and tts_key != "your_tts_api_key" else "not configured"
-        
-        # Avatar
-        avatar_key = os.getenv("AVATAR_API_KEY", "")
-        avatar_ready = "ready" if avatar_key and avatar_key != "your_avatar_api_key" else "not configured"
-        
-        # LLM
-        llm_key = os.getenv("GEMINI_API_KEY", "")
-        llm_ready = "ready" if llm_key and llm_key != "your_gemini_api_key" else "not configured"
-        
-        # Storage
-        storage_key = os.getenv("STORAGE_ACCESS_KEY", "")
-        storage_ready = "ready" if storage_key and storage_key != "your_access_key" else "not configured"
-
-        # FFmpeg
-        ffmpeg_ready = "ready" if shutil.which("ffmpeg") else "not installed"
-        
+        heygen_ready = "ready" if self.video_provider.is_configured() else "not configured"
         return {
-            "llm": llm_ready,
-            "tts": tts_ready,
-            "avatar": avatar_ready,
-            "storage": storage_ready,
-            "ffmpeg": ffmpeg_ready
+            "video_provider": "heygen",
+            "heygen": heygen_ready
         }
