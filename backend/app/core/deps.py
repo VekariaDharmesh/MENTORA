@@ -16,16 +16,16 @@ from app.services.llm_service import LLMService
 from app.teaching.state_machine import TeachingStateMachine
 
 # Singleton service instances
+llm_service = LLMService()
 doc_service = DocumentParserService()
 concept_service = ConceptGraphService()
 learner_service = LearnerModelService()
 visual_service = VisualEngineService()
 multilingual_service = MultilingualEngineService()
 media_service = MediaEngineService()
-assessment_service = AssessmentEngineService()
+assessment_service = AssessmentEngineService(llm_service)
 advanced_service = AdvancedFeaturesService()
 support_service = ProductionSupportService()
-llm_service = LLMService()
 teaching_machine = TeachingStateMachine(llm_service)
 
 def get_llm_service() -> LLMService:
@@ -60,3 +60,7 @@ def get_support_service() -> ProductionSupportService:
 
 def get_teaching_machine() -> TeachingStateMachine:
     return teaching_machine
+from app.services.vector_search import VectorSearchService
+vector_search_service = VectorSearchService()
+def get_vector_search() -> VectorSearchService:
+    return vector_search_service

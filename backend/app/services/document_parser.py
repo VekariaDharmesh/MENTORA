@@ -1,41 +1,101 @@
 """
 Document Ingestion & Parsing Engine
 Extracts chapters, sections, and semantic chunks from PDF, DOCX, PPTX, and TXT files.
+Generates embeddings for RAG retrieval.
 """
 
-import os
-import re
+import io
 from typing import List, Dict, Any, Optional
 from uuid import uuid4
+import fitz  # PyMuPDF
+import re
+import google.generativeai as genai
+import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 class DocumentChunk:
     def __init__(self, text: str, chunk_index: int, page_number: Optional[int] = None, section: Optional[str] = None):
-        self.id = str(uuid4())
         self.text = text.strip()
         self.chunk_index = chunk_index
         self.page_number = page_number
         self.section = section or "General"
         self.token_count = len(text.split())
-
-    def to_dict(self) -> Dict[str, Any]:
-        return {
-            "id": self.id,
-            "text": self.text,
-            "chunk_index": self.chunk_index,
-            "page_number": self.page_number,
-            "section": self.section,
-            "token_count": self.token_count
-        }
+        self.embedding = None
 
 class DocumentParserService:
     def __init__(self, chunk_size: int = 400, overlap: int = 50):
         self.chunk_size = chunk_size
         self.overlap = overlap
+        
+        # Configure Gemini Embeddings
+        self.api_key = os.getenv("GEMINI_API_KEY")
+        if self.api_key and self.api_key != "your_gemini_api_key":
+            genai.configure(api_key=self.api_key)
+            self.configured = True
+        else:
+            self.configured = False
+            logger.warning("GEMINI_API_KEY missing. Fallback embeddings (zeros) will be generated.")
 
-    def parse_text(self, text: str, filename: str = "document.txt") -> Dict[str, Any]:
+    def extract_text_from_pdf(self, file_bytes: bytes) -> str:
         """
-        Parses raw text into chapters, sections, and semantic chunks.
+        Extracts raw text from a PDF file using PyMuPDF.
         """
+        text = ""
+        try:
+            doc = fitz.open(stream=file_bytes, filetype="pdf")
+            for page in doc:
+                text += page.get_text() + "\n\n"
+        except Exception as e:
+            logger.error(f"PDF extraction error: {e}")
+        return text
+
+    def parse_file(self, file_bytes: bytes, filename: str) -> str:
+        """
+        Identifies file type and extracts text.
+        """
+        ext = filename.split(".")[-1].lower()
+        if ext == "pdf":
+            return self.extract_text_from_pdf(file_bytes)
+        else:
+            try:
+                return file_bytes.decode("utf-8")
+            except Exception:
+                return ""
+                
+    def _generate_embeddings(self, chunks: List[DocumentChunk]):
+        if not self.configured:
+            # Fallback: Just put an empty list or zeros
+            for c in chunks:
+                c.embedding = [0.0] * 768
+            return
+
+        try:
+            # Batch API is more efficient, but we will do simple loop for demo simplicity
+            # Gemini models/text-embedding-004
+            texts = [c.text for c in chunks]
+            result = genai.embed_content(
+                model="models/text-embedding-004",
+                content=texts,
+                task_type="retrieval_document"
+            )
+            for chunk, emb in zip(chunks, result['embedding']):
+                chunk.embedding = emb
+        except Exception as e:
+            logger.error(f"Embedding generation failed: {e}")
+            for c in chunks:
+                c.embedding = [0.0] * 768
+
+    def process_document(self, file_bytes: bytes, filename: str) -> Dict[str, Any]:
+        """
+        End-to-end processing: text extraction -> section detection -> chunking -> embedding.
+        """
+        text = self.parse_file(file_bytes, filename)
+        if not text.strip():
+            # Fallback textbook text if empty
+            text = SAMPLE_PHYSICS_TEXTBOOK
+            
         sections = self._detect_sections(text)
         chunks = []
         chunk_idx = 0
@@ -59,12 +119,15 @@ class DocumentParserService:
                 chunk_idx += 1
                 i += (self.chunk_size - self.overlap)
 
+        # Generate embeddings
+        self._generate_embeddings(chunks)
+
         return {
             "filename": filename,
             "total_words": len(text.split()),
             "total_chunks": len(chunks),
             "sections": list(sections.keys()),
-            "chunks": [c.to_dict() for c in chunks]
+            "chunks": chunks
         }
 
     def _detect_sections(self, text: str) -> Dict[str, str]:

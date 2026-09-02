@@ -55,6 +55,7 @@ class DocumentChunk(Base):
     chapter = Column(String, nullable=True)
     section = Column(String, nullable=True)
     concept = Column(String, nullable=True)
+    embedding = Column(JSON, nullable=True)
     
     document = relationship("Document", back_populates="chunks")
 

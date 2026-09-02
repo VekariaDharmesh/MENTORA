@@ -1,73 +1,83 @@
-"""
-Documents & Material Library Endpoints
-"""
-
 from fastapi import APIRouter, UploadFile, File, Depends
-from uuid import uuid4
+from sqlalchemy.orm import Session
 from typing import List, Dict, Any
 
 from app.core.deps import get_doc_service
-from app.services.document_parser import DocumentParserService, SAMPLE_PHYSICS_TEXTBOOK
+from app.db.session import get_db
+from app.db.models import Document, DocumentChunk
+from app.services.document_parser import DocumentParserService
 
 router = APIRouter()
-
-in_memory_documents = [
-    {
-        "id": "doc-01",
-        "filename": "Electricity & Magnetism.pdf",
-        "file_type": "pdf",
-        "size_mb": 4.8,
-        "total_chapters": 12,
-        "last_studied": "Yesterday",
-        "sections": ["Electric Charge", "Current", "Voltage", "Resistance", "Ohm's Law"]
-    },
-    {
-        "id": "doc-02",
-        "filename": "Machine Learning Fundamentals.pdf",
-        "file_type": "pdf",
-        "size_mb": 6.2,
-        "total_chapters": 8,
-        "last_studied": "3 days ago",
-        "sections": ["Supervised Learning", "Linear Regression", "Gradient Descent", "Neural Networks"]
-    }
-]
 
 @router.post("/documents/upload", tags=["Knowledge Engine"])
 async def upload_document(
     file: UploadFile = File(...),
-    doc_service: DocumentParserService = Depends(get_doc_service)
+    doc_service: DocumentParserService = Depends(get_doc_service),
+    db: Session = Depends(get_db)
 ):
     """
-    Parses, extracts sections, and chunks an uploaded document.
+    Parses, extracts sections, and chunks an uploaded document. Stores in Database.
     """
     content = await file.read()
-    text_content = content.decode("utf-8", errors="ignore")
-    if not text_content.strip():
-        text_content = SAMPLE_PHYSICS_TEXTBOOK
-
-    parsed = doc_service.parse_text(text_content, filename=file.filename)
     
-    doc_record = {
-        "id": f"doc-{uuid4().hex[:6]}",
-        "filename": file.filename,
-        "file_type": file.filename.split(".")[-1].lower(),
-        "size_mb": round(len(content) / (1024 * 1024), 2),
-        "total_chapters": len(parsed["sections"]),
-        "last_studied": "Just now",
-        "sections": parsed["sections"]
-    }
-    in_memory_documents.append(doc_record)
+    # Process text & chunks
+    parsed = doc_service.process_document(content, filename=file.filename)
+    
+    # Save Document
+    doc_db = Document(
+        filename=file.filename,
+        file_type=file.filename.split(".")[-1].lower(),
+        size_mb=round(len(content) / (1024 * 1024), 2),
+        total_chapters=parsed["total_chunks"]
+    )
+    db.add(doc_db)
+    db.commit()
+    db.refresh(doc_db)
+    
+    # Save Chunks
+    for chunk in parsed["chunks"]:
+        chunk_db = DocumentChunk(
+            document_id=doc_db.id,
+            content=chunk.text,
+            page_number=chunk.page_number,
+            section=chunk.section,
+            embedding=chunk.embedding
+        )
+        db.add(chunk_db)
+    db.commit()
 
     return {
         "status": "success",
-        "document": doc_record,
+        "document": {
+            "id": doc_db.id,
+            "filename": doc_db.filename,
+            "file_type": doc_db.file_type,
+            "size_mb": doc_db.size_mb,
+            "total_chapters": doc_db.total_chapters,
+            "last_studied": "Just now",
+            "sections": parsed["sections"]
+        },
         "total_chunks": parsed["total_chunks"],
         "sections": parsed["sections"]
     }
 
 @router.get("/documents", tags=["Knowledge Engine"])
-async def list_documents():
+async def list_documents(db: Session = Depends(get_db)):
     """
     Lists all documents available in the student's material library.
     """
-    return {"documents": in_memory_documents}
+    docs = db.query(Document).all()
+    # Also attach sections dynamically from chunks if needed, but for now just basic info
+    result = []
+    for d in docs:
+        sections = db.query(DocumentChunk.section).filter(DocumentChunk.document_id == d.id).distinct().all()
+        result.append({
+            "id": d.id,
+            "filename": d.filename,
+            "file_type": d.file_type,
+            "size_mb": d.size_mb,
+            "total_chapters": d.total_chapters,
+            "last_studied": "Recently",
+            "sections": [s[0] for s in sections] if sections else ["General"]
+        })
+    return {"documents": result}

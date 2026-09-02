@@ -861,36 +861,31 @@
       document.getElementById('btn-correct-continue')?.addEventListener('click', () => {
         checkpointOverlay.classList.remove('active');
         showToast('Moving forward to Final Mastery Assessment...');
+        const topic = document.querySelector('.canvas-tag')?.textContent || 'Physics';
+        window.loadAssessment(topic);
         window.location.hash = 'assessment';
         switchScreen('assessment');
       });
 
       // Try different explanation (Water-pipe analogy)
-      document.getElementById('btn-try-waterpipe-analogy')?.addEventListener('click', () => {
+      document.getElementById('btn-try-waterpipe-analogy')?.addEventListener('click', async () => {
         checkpointOverlay.classList.remove('active');
 
-        // Dynamically replace visual canvas with Water Pipe diagram
         const mount = document.getElementById('canvas-svg-mount');
         if (mount) {
-          mount.innerHTML = `
-            <svg class="player-svg-interactive" viewBox="0 0 460 210" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="2" y="2" width="456" height="206" rx="8" fill="#FFFDF9" stroke="#B86D52" />
-              <!-- Wide Pipe (Low Resistance, High Flow) -->
-              <rect x="50" y="45" width="160" height="40" rx="4" fill="#EBF1EA" stroke="#71886B" stroke-width="1.8" />
-              <text x="130" y="68" font-family="'JetBrains Mono', monospace" font-size="11" fill="#71886B" font-weight="600" text-anchor="middle">WIDE PIPE: FAST FLOW</text>
-              
-              <!-- Narrow Constriction Pipe (High Resistance, Reduced Flow) -->
-              <rect x="250" y="55" width="160" height="20" rx="4" fill="#F7E9E4" stroke="#B86D52" stroke-width="1.8" />
-              <text x="330" y="68" font-family="'JetBrains Mono', monospace" font-size="11" fill="#B86D52" font-weight="600" text-anchor="middle">NARROW: CONSTRICTED</text>
-
-              <!-- Water Wave Particles -->
-              <path d="M 60 65 Q 100 60 140 65 T 200 65" stroke="#71886B" stroke-width="2.5" />
-              <path d="M 260 65 Q 300 62 340 65 T 400 65" stroke="#B86D52" stroke-width="1.5" />
-
-              <text x="130" y="115" font-family="'Fraunces', serif" font-size="12" fill="#29251F" text-anchor="middle">Low Resistance = High Current</text>
-              <text x="330" y="115" font-family="'Fraunces', serif" font-size="12" fill="#29251F" text-anchor="middle">High Resistance = Restricted Current</text>
-            </svg>
-          `;
+          try {
+            const resp = await fetch('http://localhost:8000/api/v1/visuals/render', {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({visual_type: 'water_pipe', pipe_width: 'Narrow'})
+            });
+            if (resp.ok) {
+              const data = await resp.json();
+              mount.innerHTML = data.svg;
+            }
+          } catch (e) {
+            console.error(e);
+          }
         }
 
         if (canvasActiveTitle) canvasActiveTitle.textContent = 'Alternative Model: Water-Pipe Analogy';
@@ -1016,20 +1011,84 @@
       // ----------------------------------------------------------------------
       // 11. FINAL ASSESSMENT SCREEN
       // ----------------------------------------------------------------------
-      let currentAssessIndex = 3; // Question 3 of 8
+      let currentAssessIndex = 0;
+      let assessmentData = null;
+      let studentAnswers = {};
       const assessCounterText = document.getElementById('assess-counter-text');
       const assessDotsContainer = document.getElementById('assess-dots-container');
+      const assessQuestionTitle = document.getElementById('assess-question-title');
+      const assessOptionsList = document.getElementById('assess-options-list');
+
+      window.loadAssessment = async function(topic) {
+        showToast('Generating AI Assessment...');
+        const resp = await fetch(`http://localhost:8000/api/v1/assessment/generate?topic=${encodeURIComponent(topic)}`);
+        if (resp.ok) {
+            assessmentData = await resp.json();
+            currentAssessIndex = 0;
+            studentAnswers = {};
+            renderAssessmentQuestion();
+        }
+      };
+
+      function renderAssessmentQuestion() {
+        if (!assessmentData || !assessmentData.questions || currentAssessIndex >= assessmentData.questions.length) return;
+        
+        const q = assessmentData.questions[currentAssessIndex];
+        const total = assessmentData.total_questions;
+        
+        if (assessCounterText) assessCounterText.textContent = `Question ${currentAssessIndex + 1} of ${total}`;
+        
+        if (assessDotsContainer) {
+            let dotsHtml = '';
+            for(let i=0; i<total; i++) {
+                if (i < currentAssessIndex) dotsHtml += '<span class="assess-dot answered"></span>';
+                else if (i === currentAssessIndex) dotsHtml += '<span class="assess-dot current"></span>';
+                else dotsHtml += '<span class="assess-dot"></span>';
+            }
+            assessDotsContainer.innerHTML = dotsHtml;
+        }
+        
+        if (assessQuestionTitle) assessQuestionTitle.textContent = q.prompt;
+        
+        if (assessOptionsList) {
+            let optsHtml = '';
+            for (const [key, val] of Object.entries(q.options)) {
+                optsHtml += `
+                  <button type="button" class="checkpoint-choice-btn" data-choice="${key}" onclick="selectAssessOption(this)">
+                    <span class="checkpoint-choice-key">${key}</span>
+                    <span>${val}</span>
+                  </button>
+                `;
+            }
+            assessOptionsList.innerHTML = optsHtml;
+        }
+      }
+
+      window.selectAssessOption = function(btn) {
+        document.querySelectorAll('#assess-options-list .checkpoint-choice-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+      };
 
       document.getElementById('btn-assess-submit')?.addEventListener('click', async () => {
+        if (!assessmentData) return;
+        
+        const selectedBtn = document.querySelector('#assess-options-list .checkpoint-choice-btn.selected');
+        if (!selectedBtn) {
+            showToast('Please select an option');
+            return;
+        }
+        
+        const qId = assessmentData.questions[currentAssessIndex].id;
+        studentAnswers[qId] = selectedBtn.getAttribute('data-choice');
+        
         currentAssessIndex++;
-        if (currentAssessIndex > 8) {
-          // Assessment complete -> Query live FastAPI grading endpoint
+        if (currentAssessIndex >= assessmentData.questions.length) {
           showToast('Assessment finished! Generating your personalized learning report from AI Engine...');
           try {
             const resp = await fetch('http://localhost:8000/api/v1/assessment/submit', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ student_answers: { q1: 'B', q2: 'A', q3: 'C', q4: 'B', q5: 'B', q6: 'C', q7: 'A', q8: 'B' } })
+              body: JSON.stringify({ student_answers: studentAnswers })
             });
             if (resp.ok) {
               const report = await resp.json();
@@ -1037,32 +1096,28 @@
               if (scoreEl) scoreEl.textContent = `${report.score_pct}%`;
               const noteEl = document.querySelector('.teacher-note-bubble p');
               if (noteEl) noteEl.textContent = `"${report.teacher_observation}"`;
+              
+              const strList = document.querySelector('#report-strong-list');
+              if (strList && report.strong_areas) {
+                strList.innerHTML = report.strong_areas.map(s => `<li><span class="report-li-dot"></span>${s}</li>`).join('');
+              }
+              const weakList = document.querySelector('#report-weak-list');
+              if (weakList && report.needs_practice) {
+                weakList.innerHTML = report.needs_practice.map(s => `<li><span class="report-li-dot" style="background:#B86D52;"></span>${s}</li>`).join('');
+              }
             }
-          } catch (e) {}
+          } catch (e) {
+            console.error(e);
+          }
 
           window.location.hash = 'report';
           switchScreen('report');
         } else {
-          if (assessCounterText) assessCounterText.textContent = `Question ${currentAssessIndex} of 8`;
-          // Update dots
-          if (assessDotsContainer) {
-            const dots = assessDotsContainer.querySelectorAll('.assess-dot');
-            dots.forEach((d, idx) => {
-              if (idx < currentAssessIndex - 1) {
-                d.className = 'assess-dot answered';
-              } else if (idx === currentAssessIndex - 1) {
-                d.className = 'assess-dot current';
-              } else {
-                d.className = 'assess-dot';
-              }
-            });
-          }
-          showToast(`Answer recorded. Advancing to Question ${currentAssessIndex} of 8.`);
+          renderAssessmentQuestion();
         }
       });
 
-      // ----------------------------------------------------------------------
-      // 12. PERSONALIZED LEARNING PATH SCREEN
+      // // 12. PERSONALIZED LEARNING PATH SCREEN
       // ----------------------------------------------------------------------
       const pathNodes = document.querySelectorAll('.path-tree-node');
       const pathPopTitle = document.getElementById('path-pop-title');
