@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  # --------------------------------------------------------------------------
+  # 1. FastAPI Cognitive Backend
+  # --------------------------------------------------------------------------
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai_teacher_backend
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/ai_teacher_db
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - postgres
+      - redis
+    restart: unless-stopped
+
+  # --------------------------------------------------------------------------
+  # 2. PostgreSQL + pgvector Database
+  # --------------------------------------------------------------------------
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: ai_teacher_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ai_teacher_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
+      - ./database/seed_data.sql:/docker-entrypoint-initdb.d/02_seed.sql
+    restart: unless-stopped
+
+  # --------------------------------------------------------------------------
+  # 3. Redis Cache & State Store
+  # --------------------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: ai_teacher_redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+  # --------------------------------------------------------------------------
+  # 4. Frontend Web Server (Nginx)
+  # --------------------------------------------------------------------------
+  frontend:
+    image: nginx:alpine
+    container_name: ai_teacher_frontend
+    ports:
+      - "3000:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

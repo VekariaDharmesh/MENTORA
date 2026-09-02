@@ -1,0 +1,1860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Teacher — Warm Study Desk Education Platform</title>
+  <meta name="description" content="AI Teacher: Personalized AI educator. Warm Study Desk experience for calm, deep, human learning.">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%3E<circle cx=%2250%22 cy=%2250%22 r=%2240%22 fill=%22%23D79A4B%22/></svg>">
+
+  <!-- Typography: Fraunces, Inter, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css?v=7">
+</head>
+<body>
+  <!-- Subtle Matte Paper Noise Texture -->
+  <div class="paper-texture-canvas" aria-hidden="true"></div>
+
+  <!-- Single Production Website Navigation Header -->
+  <header class="site-nav-header" id="site-nav-header">
+    <div class="header-inner-container">
+      <!-- LEFT: Brand Logo -->
+      <a href="#landing" class="brand-logo" data-screen-target="landing" aria-label="AI Teacher Home">
+        <div class="brand-icon-mark" aria-hidden="true">α</div>
+        <span class="brand-text">
+          <span class="brand-ai">AI</span> <span class="brand-teacher">Teacher</span><span class="brand-dot">.</span>
+        </span>
+      </a>
+
+      <!-- CENTER: Primary Navigation -->
+      <nav class="desktop-main-nav" aria-label="Main Navigation">
+        <ul class="nav-links-list">
+          <li>
+            <button type="button" class="nav-item-link" data-screen-target="create-lesson">Learn</button>
+          </li>
+          <li>
+            <button type="button" class="nav-item-link" id="nav-how-it-works">How it works</button>
+          </li>
+          <li>
+            <button type="button" class="nav-item-link" data-screen-target="dashboard">Dashboard</button>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- RIGHT: Actions -->
+      <div class="header-right-actions">
+        <button type="button" class="nav-signin-btn" data-screen-target="onboarding">Sign in</button>
+        <button type="button" class="header-cta-btn" data-screen-target="onboarding">
+          <span>Start learning</span>
+          <span class="cta-arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button type="button" class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown Navigation Panel -->
+    <div class="mobile-nav-panel" id="mobile-nav-panel" aria-hidden="true">
+      <div class="mobile-nav-content">
+        <ul class="mobile-nav-list">
+          <li><button type="button" class="mobile-nav-link" data-screen-target="create-lesson">Learn</button></li>
+          <li><button type="button" class="mobile-nav-link" id="mobile-how-it-works">How it works</button></li>
+          <li><button type="button" class="mobile-nav-link" data-screen-target="dashboard">Dashboard</button></li>
+          <li><button type="button" class="mobile-nav-link" data-screen-target="onboarding">Sign in</button></li>
+        </ul>
+        <button type="button" class="header-cta-btn mobile-cta-btn" data-screen-target="onboarding">
+          <span>Start learning</span>
+          <span class="cta-arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       SCREEN 1: LANDING PAGE
+       ========================================================================= -->
+  <div class="screen-view is-visible" id="view-landing">
+    <div class="study-desk-container" style="padding-top: 3.5rem;">
+
+      <main class="hero-section">
+        <div class="hero-tagline">
+          <span class="tagline-pulse"></span>
+          <span>Adaptive Cognitive Pacing • One-on-One Instruction</span>
+        </div>
+
+        <h1 class="hero-headline">Meet your AI teacher.</h1>
+        <h2 class="hero-secondary-headline">Learn anything. At your pace. In your language.</h2>
+        <p class="hero-supporting-text">
+          Upload your study material or choose a topic. AI Teacher plans the lesson, explains concepts, asks questions, understands your answers and adapts the lesson as you learn.
+        </p>
+
+        <div class="hero-cta-group">
+          <button type="button" class="btn-primary btn-marigold" data-screen-target="create-lesson">
+            <span>Start my lesson</span>
+            <span aria-hidden="true">→</span>
+          </button>
+          <button type="button" class="btn-secondary" id="hero-explore-how-it-works">
+            <span>Explore how it works</span>
+          </button>
+        </div>
+
+        <!-- Teaching Workspace Preview -->
+        <section class="workspace-frame" id="workspace-preview" aria-label="Live Classroom Workspace Preview">
+          <div class="workspace-inner-desk">
+            <div class="workspace-top-bar">
+              <div class="workspace-teacher-badge">
+                <div class="teacher-avatar-frame" aria-label="Animated Teacher Avatar">
+                  <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="50" fill="#FAF4EB" />
+                    <!-- Torso -->
+                    <path d="M 22 96 C 22 75 34 68 50 68 C 66 68 78 75 78 96 Z" fill="#B86D52" />
+                    <polygon points="43,68 57,68 53,82 47,82" fill="#FFF9F0" />
+                    <!-- Head -->
+                    <g class="char-head-group">
+                      <rect x="44" y="56" width="12" height="14" rx="4" fill="#F3DFCD" />
+                      <ellipse cx="50" cy="42" rx="16" ry="18" fill="#F8E8D8" />
+                      <!-- Hair -->
+                      <path d="M 33 39 C 33 24 40 21 50 21 C 60 21 67 24 67 39 C 64 33 60 31 50 31 C 40 31 36 33 33 39 Z" fill="#2B2521" />
+                      <!-- Glasses -->
+                      <circle cx="43" cy="42" r="5.5" stroke="#29251F" stroke-width="1.2" fill="rgba(255,255,255,0.4)" />
+                      <circle cx="57" cy="42" r="5.5" stroke="#29251F" stroke-width="1.2" fill="rgba(255,255,255,0.4)" />
+                      <line x1="48.5" y1="42" x2="51.5" y2="42" stroke="#29251F" stroke-width="1.2" />
+                      <!-- Eyes & Pupils -->
+                      <circle cx="43" cy="42" r="2" fill="#29251F" />
+                      <circle cx="57" cy="42" r="2" fill="#29251F" />
+                      <!-- Animated Eyelids -->
+                      <rect class="char-eyelid" x="38" y="38" width="10" height="7" fill="#F8E8D8" />
+                      <rect class="char-eyelid" x="52" y="38" width="10" height="7" fill="#F8E8D8" />
+                      <!-- Mouth -->
+                      <path class="char-mouth-path" d="M 46 51 Q 50 53 54 51" stroke="#B86D52" stroke-width="1.2" stroke-linecap="round" fill="none" />
+                    </g>
+                  </svg>
+                </div>
+                <div class="teacher-meta">
+                  <div class="teacher-name-row">
+                    <span class="teacher-name">Dr. Aris (AI Teacher)</span>
+                    <span class="session-live-pill">Active Session</span>
+                  </div>
+                  <span class="teacher-status-caption">Voice & Intuition Mode • Listening</span>
+                </div>
+              </div>
+
+              <div class="workspace-header-actions">
+                <div class="lesson-progress-badge">
+                  <span>Progress: 3 / 7</span>
+                  <div class="progress-track-mini" aria-hidden="true">
+                    <div class="progress-bar-fill" id="workspace-progress-bar"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="workspace-content-grid">
+              <!-- Left Blackboard & Circuit Diagram -->
+              <div class="circuit-lesson-canvas">
+                <div class="canvas-header">
+                  <h3 class="lesson-topic-title">Understanding Electricity</h3>
+                  <span class="lesson-step-indicator">Step 03 • Closed Loop Circuit</span>
+                </div>
+                
+                <p class="canvas-desc">
+                  Electricity only does work when electrons complete an unbroken circuit from the power source through the load. Observe the current flow below:
+                </p>
+
+                <div class="svg-circuit-wrapper">
+                  <svg class="circuit-svg" viewBox="0 0 460 210" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path class="circuit-wire" d="M 60 105 L 60 40 L 400 40 L 400 105" />
+                    <path class="circuit-wire" d="M 60 135 L 60 175 L 400 175 L 400 135" />
+                    <g class="circuit-battery" transform="translate(60, 105)">
+                      <line x1="-16" y1="0" x2="16" y2="0" stroke="#29251F" stroke-width="2.5" />
+                      <line x1="-9" y1="16" x2="9" y2="16" stroke="#29251F" stroke-width="3" />
+                      <text x="-38" y="11" font-family="'JetBrains Mono', monospace" font-size="11" fill="#766E63" font-weight="600">9V</text>
+                      <text x="-24" y="-4" font-family="'JetBrains Mono', monospace" font-size="10" fill="#B86D52">+</text>
+                      <text x="-24" y="24" font-family="'JetBrains Mono', monospace" font-size="11" fill="#766E63">−</text>
+                    </g>
+                    <g class="circuit-switch" id="circuit-switch-group" transform="translate(210, 40)">
+                      <circle cx="-25" cy="0" r="3.5" fill="#29251F" />
+                      <circle cx="25" cy="0" r="3.5" fill="#29251F" />
+                      <line id="switch-arm" x1="-25" y1="0" x2="23" y2="0" stroke="#29251F" stroke-width="2.5" stroke-linecap="round" />
+                      <text x="-16" y="-12" font-family="'JetBrains Mono', monospace" font-size="9" fill="#766E63">SWITCH (CLOSED)</text>
+                    </g>
+                    <g class="circuit-lamp" transform="translate(400, 120)">
+                      <circle id="bulb-glow" class="circuit-bulb-glow" cx="0" cy="0" r="22" />
+                      <circle cx="0" cy="0" r="16" stroke="#29251F" stroke-width="2" fill="#FFF9F0" />
+                      <line x1="-10" y1="-10" x2="10" y2="10" stroke="#D79A4B" stroke-width="2" />
+                      <line x1="-10" y1="10" x2="10" y2="-10" stroke="#D79A4B" stroke-width="2" />
+                      <text x="24" y="5" font-family="'JetBrains Mono', monospace" font-size="11" fill="#766E63">R = 10Ω</text>
+                    </g>
+                    <g class="circuit-arrow" transform="translate(130, 40)"><polygon points="0,-4 8,0 0,4" fill="#D79A4B" /><text x="-4" y="-8" font-family="'JetBrains Mono', monospace" font-size="9" fill="#D79A4B">I →</text></g>
+                    <g class="circuit-arrow" transform="translate(320, 40)"><polygon points="0,-4 8,0 0,4" fill="#D79A4B" /></g>
+                    <g class="circuit-arrow" transform="translate(230, 175)"><polygon points="0,4 -8,0 0,-4" fill="#D79A4B" /><text x="-12" y="16" font-family="'JetBrains Mono', monospace" font-size="9" fill="#D79A4B">← I</text></g>
+                  </svg>
+                </div>
+
+                <div class="circuit-controls-row">
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="switch-indicator-dot" id="switch-dot"></span>
+                    <span id="circuit-status-text">Continuous loop active • I = 0.9A</span>
+                  </div>
+                  <button type="button" class="circuit-toggle-btn" id="btn-toggle-switch">
+                    <span>Toggle Switch</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Right Question Card -->
+              <div class="question-desk-card" id="question-card">
+                <div class="question-tag">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                  <span>Teacher Question Checkpoint</span>
+                </div>
+
+                <h4 class="question-prompt">
+                  "If you double the resistance (R) while keeping the voltage (V) constant, what happens to the electric current (I)?"
+                </h4>
+
+                <div class="question-options-list">
+                  <button type="button" class="option-btn" data-correct="true" data-feedback="Spot on! By Ohm's Law (I = V / R), doubling the resistance cuts the rate of electron flow in half.">
+                    <span class="option-letter">A</span>
+                    <span>The current is halved (I / 2)</span>
+                  </button>
+                  <button type="button" class="option-btn" data-correct="false" data-feedback="Notice that resistance opposes current flow. If resistance goes up, current must decrease.">
+                    <span class="option-letter">B</span>
+                    <span>The current doubles (2I)</span>
+                  </button>
+                  <button type="button" class="option-btn" data-correct="false" data-feedback="A change in resistance directly influences how many electrons pass per second.">
+                    <span class="option-letter">C</span>
+                    <span>The current remains unchanged</span>
+                  </button>
+                  <button type="button" class="option-btn" data-correct="false" data-feedback="Current only drops to zero if the switch opens or resistance becomes infinite.">
+                    <span class="option-letter">D</span>
+                    <span>The current drops to zero immediately</span>
+                  </button>
+                </div>
+
+                <div class="teacher-response-feedback" id="teacher-feedback">
+                  <strong>Teacher note:</strong> Choose an answer to test your intuitive grasp of Ohm's Law before we advance.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Feature Triad -->
+        <section class="feature-triad-section">
+          <div class="feature-statement-card">
+            <span class="feature-number-tag">01 / Ingestion</span>
+            <h3 class="feature-heading">Understands your material</h3>
+            <p class="feature-body">
+              Upload textbooks, lecture PDFs, research papers, or syllabus notes. AI Teacher digests the material and extracts core mental models without superficial skimming.
+            </p>
+          </div>
+          <div class="feature-statement-card">
+            <span class="feature-number-tag">02 / Socratic Dialogue</span>
+            <h3 class="feature-heading">Adapts while you learn</h3>
+            <p class="feature-body">
+              Never stuck, never bored. If an explanation doesn't click, your teacher switches analogies, asks intuitive questions, and calibrates difficulty to your baseline.
+            </p>
+          </div>
+          <div class="feature-statement-card">
+            <span class="feature-number-tag">03 / Multi-Modal</span>
+            <h3 class="feature-heading">Teaches through video</h3>
+            <p class="feature-body">
+              Dynamic blackboard derivations, synchronized voice narration, and self-drawing diagrams bring abstract formulas into tangible physical clarity.
+            </p>
+          </div>
+        </section>
+
+        <!-- Pipeline Section -->
+        <section class="pipeline-section">
+          <div class="pipeline-header">
+            <span class="pipeline-pretitle">The Continuous Pedagogical Loop</span>
+            <h2 class="pipeline-title">From your material to verified mastery.</h2>
+          </div>
+
+          <div class="pipeline-track-container">
+            <div class="pipeline-connector-line" aria-hidden="true"></div>
+            <div class="pipeline-stages-row">
+              <div class="pipeline-stage-node is-active" data-stage="1">
+                <div class="stage-badge-circle">01</div>
+                <h4 class="stage-title">PDF</h4>
+                <p class="stage-desc-short">Upload papers, books, or notes</p>
+              </div>
+              <div class="pipeline-stage-node" data-stage="2">
+                <div class="stage-badge-circle">02</div>
+                <h4 class="stage-title">Lesson Plan</h4>
+                <p class="stage-desc-short">Structured intuitive milestones</p>
+              </div>
+              <div class="pipeline-stage-node" data-stage="3">
+                <div class="stage-badge-circle">03</div>
+                <h4 class="stage-title">AI Teacher</h4>
+                <p class="stage-desc-short">Spoken explanation & diagrams</p>
+              </div>
+              <div class="pipeline-stage-node" data-stage="4">
+                <div class="stage-badge-circle">04</div>
+                <h4 class="stage-title">Question</h4>
+                <p class="stage-desc-short">Socratic checkpoint inquiry</p>
+              </div>
+              <div class="pipeline-stage-node" data-stage="5">
+                <div class="stage-badge-circle">05</div>
+                <h4 class="stage-title">Adaptation</h4>
+                <p class="stage-desc-short">Pacing & difficulty recalibration</p>
+              </div>
+              <div class="pipeline-stage-node" data-stage="6">
+                <div class="stage-badge-circle">06</div>
+                <h4 class="stage-title">Learning Report</h4>
+                <p class="stage-desc-short">Retained knowledge map</p>
+              </div>
+            </div>
+
+            <div class="stage-explanation-box">
+              <p class="stage-explanation-text" id="stage-details-text">
+                <strong>Stage 01 • PDF Ingestion:</strong> Drag and drop syllabi, chapters, lecture transcripts, or complex academic papers. The system maps the underlying knowledge graph.
+              </p>
+              <span class="stage-action-pill" id="stage-details-pill">Step 1 of 6</span>
+            </div>
+          </div>
+        </section>
+
+        <footer class="study-desk-footer">
+          <span class="footer-quote">"Sit down. Your teacher is ready."</span>
+          <span class="footer-copy">AI Teacher • Designed for deep, calm human learning</span>
+        </footer>
+      </main>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       SCREEN 2: MINIMAL ONBOARDING SCREEN
+       ========================================================================= -->
+  <div class="screen-view" id="view-onboarding">
+    <div class="onboarding-stage-container">
+      <div class="onboarding-card-centered">
+        
+        <div class="onboarding-header">
+          <div class="onboarding-logo">
+            <div class="brand-icon-mark" aria-hidden="true">α</div>
+            <span class="brand-text">AI Teacher<span class="brand-dot"></span></span>
+          </div>
+          <h1 class="onboarding-heading">Let's build your learning space.</h1>
+          <p class="onboarding-subtext">
+            Your teacher will use this information to personalize every lesson.
+          </p>
+        </div>
+
+        <form class="onboarding-form" id="onboarding-form" onsubmit="return false;">
+          
+          <div class="stagger-field stagger-1">
+            <span class="field-label">Name</span>
+            <p class="field-prompt">What should your teacher call you?</p>
+            <input 
+              type="text" 
+              id="student-name-input" 
+              class="onboarding-input-text" 
+              placeholder="e.g. Maya Patel" 
+              value="Maya Patel"
+              autocomplete="name"
+            />
+          </div>
+
+          <div class="stagger-field stagger-2">
+            <span class="field-label">Learning Level</span>
+            <p class="field-prompt">Select your current familiarity</p>
+            <div class="control-chip-group" id="level-chips">
+              <button type="button" class="choice-chip is-selected" data-val="Beginner">Beginner</button>
+              <button type="button" class="choice-chip" data-val="Intermediate">Intermediate</button>
+              <button type="button" class="choice-chip" data-val="Advanced">Advanced</button>
+            </div>
+          </div>
+
+          <div class="stagger-field stagger-3">
+            <span class="field-label">Preferred Language</span>
+            <p class="field-prompt">Which language feels most natural for explanations?</p>
+            <div class="control-chip-group" id="language-chips">
+              <button type="button" class="choice-chip" data-val="English">English</button>
+              <button type="button" class="choice-chip" data-val="Hindi">Hindi</button>
+              <button type="button" class="choice-chip" data-val="Gujarati">Gujarati</button>
+              <button type="button" class="choice-chip is-selected" data-val="Hinglish">Hinglish</button>
+              <button type="button" class="choice-chip" data-val="Other">Other</button>
+            </div>
+          </div>
+
+          <div class="stagger-field stagger-4">
+            <span class="field-label">Learning Goal (Optional)</span>
+            <p class="field-prompt">What are you learning for?</p>
+            <div class="control-chip-group" id="goal-chips">
+              <button type="button" class="choice-chip is-selected" data-val="College">College</button>
+              <button type="button" class="choice-chip" data-val="Exams">Exams</button>
+              <button type="button" class="choice-chip" data-val="Interview">Interview</button>
+              <button type="button" class="choice-chip" data-val="Personal curiosity">Personal curiosity</button>
+              <button type="button" class="choice-chip" data-val="Career">Career</button>
+            </div>
+          </div>
+
+          <div class="stagger-field stagger-5" style="margin-top: 1rem;">
+            <button type="submit" class="btn-primary btn-marigold" id="btn-submit-onboarding" style="width: 100%; justify-content: center; padding: 1rem; font-size: 1rem;">
+              <span>Create my learning space</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       SCREEN 3: MAIN STUDENT DASHBOARD
+       ========================================================================= -->
+  <div class="screen-view" id="view-dashboard">
+    <div class="dashboard-workspace-layout">
+      
+      <aside class="dashboard-nav-rail">
+        <div>
+          <div class="rail-top-brand">
+            <a href="#landing" class="brand-logo" data-screen-target="landing">
+              <div class="brand-icon-mark" aria-hidden="true">α</div>
+              <span class="brand-text">AI Teacher<span class="brand-dot"></span></span>
+            </a>
+          </div>
+
+          <ul class="rail-menu-list">
+            <li>
+              <button type="button" class="rail-menu-btn active" data-screen-target="dashboard">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <span>Home</span>
+                <span class="rail-active-pip"></span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="rail-menu-btn" data-screen-target="create-lesson">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                <span>Learn</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="rail-menu-btn" data-screen-target="learning-path">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <span>Learning Path</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="rail-menu-btn" data-screen-target="library">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                <span>Library</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="rail-menu-btn" data-screen-target="progress">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"></path><path d="M12 20V4"></path><path d="M6 20v-6"></path></svg>
+                <span>Progress</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <div class="rail-bottom-section">
+          <button type="button" class="rail-menu-btn" data-screen-target="settings">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            <span>Settings</span>
+          </button>
+          <button type="button" class="rail-menu-btn" id="rail-help-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            <span>Help</span>
+          </button>
+        </div>
+      </aside>
+
+      <main class="dashboard-main-content">
+        <div class="dashboard-top-row">
+          <div class="dash-heading-block">
+            <h1>Good morning.</h1>
+            <p>What shall we understand today?</p>
+          </div>
+
+          <div class="dash-user-badge">
+            <button type="button" class="dash-notification-btn" id="dash-notif-btn" aria-label="Notifications">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#29251F" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              <span class="notif-dot"></span>
+            </button>
+            <div class="dash-avatar-circle" id="dash-avatar-display">M</div>
+            <span class="dash-user-name" id="dash-user-name-display">Maya Patel</span>
+          </div>
+        </div>
+
+        <div class="dash-primary-input-card">
+          <input 
+            type="text" 
+            id="dash-quick-topic"
+            class="dash-large-input" 
+            placeholder="What do you want to learn?"
+          />
+          <button type="button" class="dash-input-action-btn" id="btn-dash-quick-submit" aria-label="Search and learn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        <div>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #766E63; text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 0.85rem;">
+            Or start with your material
+          </span>
+          <div class="dash-tactile-options-grid">
+            <div class="dash-tactile-card" data-screen-target="create-lesson">
+              <div class="tactile-card-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D79A4B" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><polyline points="9 15 12 12 15 15"></polyline></svg>
+              </div>
+              <div>
+                <h3 class="tactile-card-title">Upload material</h3>
+                <p class="tactile-card-sub">PDF, DOCX, PPTX or TXT</p>
+              </div>
+            </div>
+
+            <div class="dash-tactile-card" data-screen-target="create-lesson">
+              <div class="tactile-card-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B86D52" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+              </div>
+              <div>
+                <h3 class="tactile-card-title">Choose a topic</h3>
+                <p class="tactile-card-sub">Start from a subject or question</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="dash-section-header">
+            <h2 class="dash-section-title">Continue learning</h2>
+          </div>
+          <div class="continue-learning-stack">
+            <div class="continue-card-row" data-screen-target="player">
+              <div class="continue-info">
+                <span class="continue-domain">Physics</span>
+                <span class="continue-topic">Electricity • "Ohm's Law"</span>
+              </div>
+              <div class="continue-mastery-col">
+                <div class="continue-bar-track">
+                  <div class="continue-bar-fill" style="width: 68%;"></div>
+                </div>
+                <span class="continue-score">68% mastered</span>
+              </div>
+              <span class="continue-link-action">Continue learning →</span>
+            </div>
+
+            <div class="continue-card-row" data-screen-target="player">
+              <div class="continue-info">
+                <span class="continue-domain">Computer Science</span>
+                <span class="continue-topic">Machine Learning • "Supervised Learning"</span>
+              </div>
+              <div class="continue-mastery-col">
+                <div class="continue-bar-track">
+                  <div class="continue-bar-fill" style="width: 42%;"></div>
+                </div>
+                <span class="continue-score">42% mastered</span>
+              </div>
+              <span class="continue-link-action">Continue learning →</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="dash-section-header">
+            <h2 class="dash-section-title">Your learning path</h2>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #766E63;">Physics: Core Electromagnetism</span>
+          </div>
+
+          <div class="learning-path-vertical-card">
+            <div class="path-route-list">
+              <div class="path-connecting-line" aria-hidden="true"></div>
+
+              <div class="path-milestone-node completed" data-screen-target="learning-path">
+                <div class="milestone-badge-dot">✓</div>
+                <div class="milestone-content">
+                  <span class="milestone-title">01 • Electric Charge & Static Fields</span>
+                  <span class="milestone-desc">Coulomb's Law, electron drift, and field lines</span>
+                </div>
+                <span class="milestone-status-tag status-completed">Completed</span>
+              </div>
+
+              <div class="path-milestone-node completed" data-screen-target="learning-path">
+                <div class="milestone-badge-dot">✓</div>
+                <div class="milestone-content">
+                  <span class="milestone-title">02 • Electric Potential & Voltage</span>
+                  <span class="milestone-desc">Work done, energy conservation, potential difference</span>
+                </div>
+                <span class="milestone-status-tag status-completed">Completed</span>
+              </div>
+
+              <div class="path-milestone-node current" data-screen-target="player">
+                <div class="milestone-badge-dot">03</div>
+                <div class="milestone-content">
+                  <span class="milestone-title">03 • Ohm's Law & Circuit Flow</span>
+                  <span class="milestone-desc">Resistance, current flow, and voltage relationship</span>
+                </div>
+                <span class="milestone-status-tag status-current">Current Lesson</span>
+              </div>
+
+              <div class="path-milestone-node locked" data-screen-target="learning-path">
+                <div class="milestone-badge-dot">04</div>
+                <div class="milestone-content">
+                  <span class="milestone-title">04 • Series & Parallel Topologies</span>
+                  <span class="milestone-desc">Kirchhoff's Laws and multi-branch division</span>
+                </div>
+                <span class="milestone-status-tag status-locked">Locked</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="dash-section-header">
+            <h2 class="dash-section-title">Recent lessons</h2>
+          </div>
+          <div class="recent-lessons-notebook">
+            <div class="notebook-row notebook-header">
+              <span>Topic</span>
+              <span>Date</span>
+              <span>Score</span>
+              <span>Duration</span>
+            </div>
+            <div class="notebook-row" data-screen-target="player">
+              <strong>Electric Potential & Work</strong>
+              <span style="color: #766E63;">Sep 1, 2026</span>
+              <span style="color: #71886B; font-weight: 600;">94%</span>
+              <span style="color: #766E63;">18 min</span>
+            </div>
+            <div class="notebook-row" data-screen-target="player">
+              <strong>Coulomb's Law Intuition</strong>
+              <span style="color: #766E63;">Aug 29, 2026</span>
+              <span style="color: #71886B; font-weight: 600;">88%</span>
+              <span style="color: #766E63;">22 min</span>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       SCREEN 4: "CREATE A LESSON" SCREEN
+       ========================================================================= -->
+  <div class="screen-view" id="view-create-lesson">
+    <div class="create-lesson-container">
+      <div class="create-lesson-header">
+        <h1 class="create-lesson-heading">What would you like to learn?</h1>
+        <p class="create-lesson-subtext">Give your teacher a topic or bring your own material.</p>
+      </div>
+
+      <div class="topic-prompt-card">
+        <textarea 
+          id="create-topic-textarea"
+          class="topic-prompt-textarea" 
+          placeholder="e.g. Explain neural networks to me from the beginning"
+        >Understanding Electricity: Current, Voltage, and Ohm's Law</textarea>
+      </div>
+
+      <div class="editorial-or-divider">
+        <div class="divider-rule"></div>
+        <span class="divider-text">OR</span>
+        <div class="divider-rule"></div>
+      </div>
+
+      <div class="paper-dropzone-zone" id="create-paper-dropzone">
+        <input type="file" id="create-file-input" style="display: none;" accept=".pdf,.docx,.pptx,.txt" />
+        <div class="paper-dropzone-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><polyline points="9 15 12 12 15 15"></polyline></svg>
+        </div>
+        <p class="paper-drop-main-text">Drop your material here</p>
+        <span class="paper-drop-formats">PDF · DOCX · PPTX · TXT</span>
+        <span class="paper-browse-link">Browse files</span>
+      </div>
+
+      <div class="personalization-stack">
+        <div>
+          <span class="personalization-label">Your Level</span>
+          <div class="control-chip-group" id="create-level-chips">
+            <button type="button" class="choice-chip is-selected" data-val="Beginner">Beginner</button>
+            <button type="button" class="choice-chip" data-val="Intermediate">Intermediate</button>
+            <button type="button" class="choice-chip" data-val="Advanced">Advanced</button>
+          </div>
+        </div>
+
+        <div>
+          <span class="personalization-label">Time Available</span>
+          <div class="control-chip-group" id="create-time-chips">
+            <button type="button" class="choice-chip" data-val="5 min">5 min</button>
+            <button type="button" class="choice-chip is-selected" data-val="20 min">20 min</button>
+            <button type="button" class="choice-chip" data-val="60 min">60 min</button>
+            <button type="button" class="choice-chip" data-val="7 days">7 days</button>
+          </div>
+        </div>
+
+        <div>
+          <span class="personalization-label">Teach Me In</span>
+          <div class="control-chip-group" id="create-lang-chips">
+            <button type="button" class="choice-chip" data-val="English">English</button>
+            <button type="button" class="choice-chip" data-val="Hindi">Hindi</button>
+            <button type="button" class="choice-chip" data-val="Gujarati">Gujarati</button>
+            <button type="button" class="choice-chip is-selected" data-val="Hinglish">Hinglish</button>
+          </div>
+        </div>
+
+        <div>
+          <span class="personalization-label">Learning Goal (Optional)</span>
+          <input 
+            type="text" 
+            id="create-goal-input"
+            class="onboarding-input-text" 
+            placeholder="What should I be able to understand by the end?" 
+            value="Understand how current, voltage and resistance interact in real life."
+          />
+        </div>
+      </div>
+
+      <div class="btn-transform-container">
+        <button type="button" class="btn-primary btn-marigold btn-build-lesson" id="btn-build-lesson">
+          <span id="btn-build-lesson-text">Build my lesson →</span>
+          <div class="btn-progress-line" id="btn-progress-line"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       SCREEN 5: CINEMATIC AI TEACHER LESSON PREPARATION
+       ========================================================================= -->
+  <div class="screen-view" id="view-prep">
+    <div class="prep-screen-stage">
+      <div class="prep-header">
+        <h1 class="prep-heading">Preparing your lesson</h1>
+        <p class="prep-subheading">Your teacher is studying the material before teaching you.</p>
+      </div>
+
+      <div class="prep-cinematic-grid">
+        <div class="prep-sequence-card">
+          <div class="prep-steps-timeline">
+            <div class="prep-thin-connecting-line" aria-hidden="true"></div>
+
+            <div class="prep-step-item is-done" id="prep-step-1">
+              <span class="prep-step-icon">✓</span>
+              <span>Understanding your material</span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #71886B;">Done</span>
+            </div>
+            <div class="prep-step-item is-done" id="prep-step-2">
+              <span class="prep-step-icon">✓</span>
+              <span>Finding important concepts</span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #71886B;">Done</span>
+            </div>
+            <div class="prep-step-item is-done" id="prep-step-3">
+              <span class="prep-step-icon">✓</span>
+              <span>Building the lesson structure</span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #71886B;">Done</span>
+            </div>
+            <div class="prep-step-item is-active" id="prep-step-4">
+              <span class="prep-step-icon">●</span>
+              <span>Choosing examples</span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #D79A4B;">Active</span>
+            </div>
+            <div class="prep-step-item is-pending" id="prep-step-5">
+              <span class="prep-step-icon">○</span>
+              <span>Preparing visual explanations</span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #A49A8D;">Pending</span>
+            </div>
+            <div class="prep-step-item is-pending" id="prep-step-6">
+              <span class="prep-step-icon">○</span>
+              <span>Preparing checkpoints</span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #A49A8D;">Pending</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="prep-plan-preview-card">
+          <span class="plan-preview-label">Live Teacher Plan Preview</span>
+          <h3 class="plan-topic-title" id="prep-plan-topic">Electricity</h3>
+
+          <div class="plan-items-list" id="prep-plan-items">
+            <div class="plan-item-row" style="animation-delay: 0.1s;">
+              <span class="plan-item-num">01</span>
+              <span>Current & Charge Drift</span>
+            </div>
+            <div class="plan-item-row is-current" style="animation-delay: 0.3s;">
+              <span class="plan-item-num">02</span>
+              <span>Voltage & Potential Gradient</span>
+            </div>
+            <div class="plan-item-row" style="animation-delay: 0.5s;">
+              <span class="plan-item-num">03</span>
+              <span>Resistance & Material Friction</span>
+            </div>
+            <div class="plan-item-row" style="animation-delay: 0.7s;">
+              <span class="plan-item-num">04</span>
+              <span>Ohm's Law Unified Model</span>
+            </div>
+            <div class="plan-item-row" style="animation-delay: 0.9s;">
+              <span class="plan-item-num">05</span>
+              <span>Circuit relationships & Checkpoint</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <span class="prep-footer-meta" id="prep-summary-meta">
+          20 minute lesson · Beginner · Hinglish
+        </span>
+        <button type="button" class="btn-primary btn-marigold" id="btn-enter-lesson-player">
+          <span>Enter Classroom Now →</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       SCREEN 6: FLAGSHIP AI TEACHER LESSON PLAYER
+       Includes:
+       - Checkpoint Overlay & Rising Panel
+       - Correct Answer State
+       - Adaptive Misconception State (Water-pipe analogy vs formula)
+       - Teacher Brain Side Inspector Drawer
+       - Contextual "Ask your teacher" Dock
+       ========================================================================= -->
+  <div class="screen-view" id="view-player">
+    <div class="lesson-player-stage" id="lesson-player-stage">
+      
+      <!-- Top Title & Controls -->
+      <div class="player-top-nav">
+        <div>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #B86D52; text-transform: uppercase;">
+            Physics: Electromagnetism • Module 03
+          </span>
+          <h1 class="player-lesson-title" id="player-lesson-title">Understanding Electricity</h1>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <button type="button" class="btn-secondary" id="btn-toggle-teacher-brain" style="padding: 0.45rem 0.85rem; font-size: 0.75rem;">
+            🧠 Teacher Brain
+          </button>
+          <button type="button" class="btn-secondary" id="btn-trigger-checkpoint" style="padding: 0.45rem 0.85rem; font-size: 0.75rem;">
+            ⚡ Quick Check
+          </button>
+          <button type="button" class="btn-secondary" data-screen-target="dashboard" style="padding: 0.45rem 0.85rem; font-size: 0.75rem;">
+            ← Exit to Desk
+          </button>
+        </div>
+      </div>
+
+      <!-- Horizontal Lesson Sequence Bar: moss green completed, marigold current, muted beige upcoming -->
+      <div class="lesson-sequence-bar" id="player-sequence-bar">
+        <div class="seq-segment-pill completed" data-segment="intro">
+          <span>INTRODUCTION</span>
+          <span>✓</span>
+        </div>
+        <div class="seq-segment-pill completed" data-segment="current">
+          <span>CURRENT</span>
+          <span>✓</span>
+        </div>
+        <div class="seq-segment-pill current" data-segment="voltage">
+          <span>VOLTAGE</span>
+          <span>●</span>
+        </div>
+        <div class="seq-segment-pill upcoming" data-segment="resistance">
+          <span>RESISTANCE</span>
+          <span>○</span>
+        </div>
+        <div class="seq-segment-pill upcoming" data-segment="ohms-law">
+          <span>OHM'S LAW</span>
+          <span>○</span>
+        </div>
+      </div>
+
+      <!-- Center Dual Stage: Left Teacher Video Frame / Right Dynamic Visual Canvas -->
+      <div class="player-dual-stage-grid">
+        
+        <!-- Left: Softly Rounded Matte Teacher Animated Character Frame -->
+        <div class="player-teacher-video-frame is-speaking" id="player-teacher-frame">
+          <div class="animated-teacher-stage">
+            <svg class="teacher-character-svg" viewBox="0 0 400 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="lampGlowGrad" cx="85%" cy="30%" r="55%">
+                  <stop offset="0%" stop-color="#D79A4B" stop-opacity="0.38" />
+                  <stop offset="60%" stop-color="#FCEFD9" stop-opacity="0.12" />
+                  <stop offset="100%" stop-color="#FAF4EB" stop-opacity="0" />
+                </radialGradient>
+                <linearGradient id="wallTone" x1="0" y1="0" x2="0" y2="100%">
+                  <stop offset="0%" stop-color="#F7F1E7" />
+                  <stop offset="100%" stop-color="#EFE5D5" />
+                </linearGradient>
+                <linearGradient id="blazerTone" x1="0" y1="0" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#C27559" />
+                  <stop offset="100%" stop-color="#A55E46" />
+                </linearGradient>
+              </defs>
+
+              <!-- Layer 1: Study Classroom Wall & Atmosphere -->
+              <rect width="400" height="360" fill="url(#wallTone)" />
+              <circle class="lamp-glow-orb" cx="330" cy="110" r="140" fill="url(#lampGlowGrad)" />
+
+              <!-- Blackboard Frame Edge & Faint Academic Equations -->
+              <rect x="25" y="25" width="130" height="90" rx="6" fill="#F0E8DA" stroke="#DED4C5" stroke-width="1.2" />
+              <text x="35" y="52" font-family="'JetBrains Mono', monospace" font-size="11" fill="#A49A8D" font-weight="600">V = I · R</text>
+              <text x="35" y="72" font-family="'JetBrains Mono', monospace" font-size="9" fill="#BDB3A6">P = V · I</text>
+              <text x="35" y="90" font-family="'JetBrains Mono', monospace" font-size="8" fill="#C8BDAA">ΔV = W / Q</text>
+
+              <!-- Warm Study Lamp Arm on Right -->
+              <path d="M 360 170 L 330 95 L 315 105" stroke="#766E63" stroke-width="2.5" stroke-linecap="round" />
+              <polygon points="305,98 335,85 325,120 295,115" fill="#D79A4B" />
+              <circle cx="312" cy="112" r="7" fill="#FFF9F0" />
+
+              <!-- Floating subtle ambient particles -->
+              <circle class="idea-particle" cx="150" cy="70" r="1.5" fill="#D79A4B" />
+              <circle class="idea-particle" cx="280" cy="140" r="2" fill="#D79A4B" />
+              <circle class="idea-particle" cx="120" cy="180" r="1.2" fill="#71886B" />
+
+              <!-- Layer 2: Study Desk Baseline -->
+              <rect x="0" y="305" width="400" height="55" fill="#E8DEC9" />
+              <line x1="0" y1="305" x2="400" y2="305" stroke="#DED4C5" stroke-width="2" />
+              <!-- Notebook & Paper on Desk -->
+              <rect x="40" y="318" width="80" height="36" rx="3" fill="#FFF9F0" stroke="#DED4C5" transform="rotate(-3 40 318)" />
+              <line x1="50" y1="326" x2="105" y2="323" stroke="#DED4C5" stroke-width="1" />
+              <line x1="50" y1="332" x2="95" y2="329" stroke="#DED4C5" stroke-width="1" />
+
+              <!-- Layer 3: Teacher Body & Torso (Breathing) -->
+              <g class="char-torso-group">
+                <!-- Shoulders & Coat -->
+                <path d="M 90 360 C 92 278 135 240 200 240 C 265 240 308 278 310 360 Z" fill="url(#blazerTone)" />
+                <!-- Charcoal Lapels -->
+                <polygon points="172,240 190,295 180,360 160,360 152,280" fill="#29251F" />
+                <polygon points="228,240 210,295 220,360 240,360 248,280" fill="#29251F" />
+                <!-- Crisp Cream Shirt Collar -->
+                <polygon points="182,240 200,270 218,240 208,230 192,230" fill="#FFF9F0" />
+                <!-- Amber Tie / Placket -->
+                <polygon points="196,260 204,260 202,320 198,320" fill="#D79A4B" />
+
+                <!-- Hand Resting on Desk with Pen -->
+                <g transform="translate(250, 290)">
+                  <!-- Cuff -->
+                  <rect x="0" y="5" width="22" height="18" rx="4" fill="#FFF9F0" />
+                  <!-- Hand/Fingers -->
+                  <ellipse cx="18" cy="16" rx="14" ry="11" fill="#F8E8D8" />
+                  <ellipse cx="26" cy="18" rx="5" ry="4" fill="#F3DFCD" />
+                  <!-- Amber Fountain Pen -->
+                  <rect x="20" y="2" width="5" height="32" rx="2" fill="#D79A4B" transform="rotate(-35 20 2)" />
+                  <polygon points="35,-12 40,-8 34,-6" fill="#DED4C5" />
+                </g>
+              </g>
+
+              <!-- Layer 4: Head, Facial Expression, Blinking & Speaking -->
+              <g class="char-head-group">
+                <!-- Neck -->
+                <rect x="186" y="200" width="28" height="38" rx="6" fill="#F3DFCD" />
+                <path d="M 186 215 C 193 222 207 222 214 215 L 214 230 L 186 230 Z" fill="#E6CEB8" opacity="0.6" />
+
+                <!-- Ears -->
+                <ellipse cx="147" cy="155" rx="7" ry="11" fill="#F8E8D8" />
+                <ellipse cx="147" cy="155" rx="4" ry="7" fill="#E6CEB8" />
+                <ellipse cx="253" cy="155" rx="7" ry="11" fill="#F8E8D8" />
+                <ellipse cx="253" cy="155" rx="4" ry="7" fill="#E6CEB8" />
+
+                <!-- Face Oval -->
+                <ellipse cx="200" cy="152" rx="48" ry="56" fill="#F8E8D8" />
+                <!-- Soft Warm Cheek Blush -->
+                <circle cx="168" cy="165" r="10" fill="#F2D5C2" opacity="0.6" />
+                <circle cx="232" cy="165" r="10" fill="#F2D5C2" opacity="0.6" />
+
+                <!-- Hair (Refined Academic Styling in Deep Warm Charcoal) -->
+                <path d="M 148 142 C 145 92 170 82 200 82 C 230 82 255 92 252 142 C 246 122 232 110 200 110 C 168 110 154 122 148 142 Z" fill="#2B2521" />
+                <!-- Sideburns -->
+                <path d="M 148 135 L 152 160 L 156 145 Z" fill="#2B2521" />
+                <path d="M 252 135 L 248 160 L 244 145 Z" fill="#2B2521" />
+
+                <!-- Eyebrows -->
+                <path d="M 166 128 Q 179 124 190 128" stroke="#2B2521" stroke-width="2.5" stroke-linecap="round" fill="none" />
+                <path d="M 234 128 Q 221 124 210 128" stroke="#2B2521" stroke-width="2.5" stroke-linecap="round" fill="none" />
+
+                <!-- Eyes Container -->
+                <g class="char-eyes">
+                  <!-- Sclera -->
+                  <ellipse cx="178" cy="144" rx="10" ry="7.5" fill="#FFFDF9" stroke="#E2D6C5" stroke-width="0.8" />
+                  <ellipse cx="222" cy="144" rx="10" ry="7.5" fill="#FFFDF9" stroke="#E2D6C5" stroke-width="0.8" />
+
+                  <!-- Pupils with Animated Gaze -->
+                  <g class="char-pupil-left">
+                    <circle cx="178" cy="144" r="5" fill="#29251F" />
+                    <circle cx="179.5" cy="142.5" r="1.5" fill="#FFFFFF" />
+                  </g>
+                  <g class="char-pupil-right">
+                    <circle cx="222" cy="144" r="5" fill="#29251F" />
+                    <circle cx="223.5" cy="142.5" r="1.5" fill="#FFFFFF" />
+                  </g>
+
+                  <!-- Animated Blinking Eyelids -->
+                  <rect class="char-eyelid" x="166" y="135" width="24" height="18" fill="#F8E8D8" />
+                  <rect class="char-eyelid" x="210" y="135" width="24" height="18" fill="#F8E8D8" />
+                </g>
+
+                <!-- Scholarly Wire Glasses -->
+                <g class="char-glasses">
+                  <circle cx="178" cy="144" r="16" stroke="#29251F" stroke-width="2.2" fill="rgba(255, 255, 255, 0.25)" />
+                  <circle cx="222" cy="144" r="16" stroke="#29251F" stroke-width="2.2" fill="rgba(255, 255, 255, 0.25)" />
+                  <path d="M 194 142 Q 200 139 206 142" stroke="#29251F" stroke-width="2.2" fill="none" />
+                  <!-- Glint Reflection on Lenses -->
+                  <path d="M 169 135 L 175 131" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" opacity="0.6" />
+                  <path d="M 213 135 L 219 131" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" opacity="0.6" />
+                </g>
+
+                <!-- Nose -->
+                <path d="M 200 144 L 197 158 Q 201 161 204 158" stroke="#D8B896" stroke-width="1.8" stroke-linecap="round" fill="none" />
+
+                <!-- Responsive Speaking Mouth -->
+                <path class="char-mouth-path" d="M 191 171 Q 200 174 209 171" stroke="#B86D52" stroke-width="2.2" stroke-linecap="round" fill="none" />
+              </g>
+            </svg>
+          </div>
+
+          <div class="teacher-video-status-overlay">
+            <div class="audio-listening-wave" aria-hidden="true">
+              <span class="wave-bar"></span>
+              <span class="wave-bar"></span>
+              <span class="wave-bar"></span>
+            </div>
+            <span id="player-teacher-state">Dr. Aris is explaining...</span>
+          </div>
+        </div>
+
+        <!-- Right: Subject Visual Canvas (Changes Dynamically as Concept Evolves!) -->
+        <div class="player-subject-visual-canvas" id="player-canvas-container">
+          <div class="canvas-concept-header">
+            <h3 class="canvas-concept-title" id="canvas-active-title">Visual Model: Voltage as Electric Pressure</h3>
+            <span class="canvas-concept-tag" id="canvas-active-tag">Potential Difference (ΔV)</span>
+          </div>
+
+          <!-- Dynamic SVG Diagram (Switchable between Circuit and Water Pipe Analogy) -->
+          <div id="canvas-svg-mount">
+            <svg class="player-svg-interactive" viewBox="0 0 460 210" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="2" width="456" height="206" rx="8" fill="#FFF9F0" stroke="#DED4C5" />
+              <path d="M 60 105 L 60 40 L 400 40 L 400 105" stroke="#29251F" stroke-width="2.2" stroke-linecap="round" />
+              <path d="M 60 135 L 60 175 L 400 175 L 400 135" stroke="#29251F" stroke-width="2.2" stroke-linecap="round" />
+              
+              <g transform="translate(60, 105)">
+                <line x1="-16" y1="0" x2="16" y2="0" stroke="#29251F" stroke-width="2.5" />
+                <line x1="-9" y1="16" x2="9" y2="16" stroke="#29251F" stroke-width="3" />
+                <rect x="-42" y="-14" width="24" height="42" rx="4" fill="#FCEFD9" stroke="#D79A4B" />
+                <text x="-30" y="11" font-family="'JetBrains Mono', monospace" font-size="11" fill="#D79A4B" font-weight="700" text-anchor="middle">ΔV</text>
+              </g>
+
+              <g id="player-canvas-dynamic-focus" transform="translate(230, 40)">
+                <rect x="-65" y="-18" width="130" height="36" rx="6" fill="#F7E9E4" stroke="#B86D52" />
+                <text x="0" y="5" font-family="'JetBrains Mono', monospace" font-size="11" fill="#B86D52" font-weight="600" text-anchor="middle">
+                  HIGH POTENTIAL (+)
+                </text>
+              </g>
+
+              <g transform="translate(400, 120)">
+                <circle cx="0" cy="0" r="22" fill="#D79A4B" opacity="0.25" id="player-lamp-glow" />
+                <circle cx="0" cy="0" r="16" stroke="#29251F" stroke-width="2" fill="#FFF9F0" />
+                <line x1="-10" y1="-10" x2="10" y2="10" stroke="#D79A4B" stroke-width="2" />
+                <line x1="-10" y1="10" x2="10" y2="-10" stroke="#D79A4B" stroke-width="2" />
+              </g>
+
+              <g transform="translate(130, 40)">
+                <polygon points="0,-4 8,0 0,4" fill="#D79A4B" />
+                <text x="-4" y="-8" font-family="'JetBrains Mono', monospace" font-size="9" fill="#D79A4B">e⁻ drift</text>
+              </g>
+              <g transform="translate(320, 40)">
+                <polygon points="0,-4 8,0 0,4" fill="#D79A4B" />
+              </g>
+            </svg>
+          </div>
+
+          <div style="font-size: 0.75rem; color: #766E63; display: flex; align-items: center; justify-content: space-between;">
+            <span id="canvas-footer-caption">Physical Model: Voltage pumps charge across circuit loops.</span>
+            <span style="font-family: 'JetBrains Mono', monospace; color: #D79A4B;" id="canvas-formula-display">V = W / Q</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Caption Area -->
+      <div class="player-caption-box">
+        <p class="caption-text-main" id="player-active-caption">
+          "Voltage is the force that pushes electrical charge through a circuit."
+        </p>
+      </div>
+
+      <!-- Bottom Minimal Low-Contrast Controls Bar -->
+      <div class="player-bottom-controls-bar">
+        <div class="player-left-controls">
+          <button type="button" class="control-icon-btn control-play-btn" id="player-btn-play" aria-label="Play or Pause">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          </button>
+          <button type="button" class="control-icon-btn" id="player-btn-replay" aria-label="Replay 10s">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+          </button>
+        </div>
+
+        <div class="player-timeline-wrapper">
+          <span class="timeline-time-display" id="timeline-cur-time">04:15</span>
+          <div class="timeline-slider-track" id="timeline-track">
+            <div class="timeline-slider-fill" id="timeline-fill" style="width: 42%;"></div>
+          </div>
+          <span class="timeline-time-display">12:00</span>
+        </div>
+
+        <div class="player-right-controls">
+          <button type="button" class="control-pill-btn" id="player-btn-captions">CC ON</button>
+          <button type="button" class="control-pill-btn" id="player-btn-lang">Hinglish</button>
+          <button type="button" class="control-icon-btn" id="player-btn-vol" aria-label="Volume">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- =====================================================================
+           CHECKPOINT OVERLAY SYSTEM (Subtly dims background, rises 16px spring)
+           ===================================================================== -->
+      <div class="player-stage-dimmer" id="player-checkpoint-overlay">
+        <div class="checkpoint-rising-panel">
+          
+          <!-- STATE 1: QUESTION PANEL -->
+          <div id="checkpoint-state-question">
+            <div class="checkpoint-header-row">
+              <span class="checkpoint-badge">Quick Check</span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #766E63;">Resistance Assessment</span>
+            </div>
+
+            <h3 class="checkpoint-question-heading">
+              "What happens to current if resistance increases while voltage stays constant?"
+            </h3>
+
+            <div class="checkpoint-answers-grid">
+              <button type="button" class="checkpoint-choice-btn" data-choice="A">
+                <span class="checkpoint-choice-key">A</span>
+                <span>It increases</span>
+              </button>
+              <button type="button" class="checkpoint-choice-btn" data-choice="B">
+                <span class="checkpoint-choice-key">B</span>
+                <span>It decreases</span>
+              </button>
+              <button type="button" class="checkpoint-choice-btn" data-choice="C">
+                <span class="checkpoint-choice-key">C</span>
+                <span>It stays the same</span>
+              </button>
+              <button type="button" class="checkpoint-choice-btn" data-choice="D">
+                <span class="checkpoint-choice-key">D</span>
+                <span>Cannot determine</span>
+              </button>
+            </div>
+
+            <div class="checkpoint-bottom-actions">
+              <span class="checkpoint-subtle-hint">Take your time. Your teacher is listening.</span>
+              <button type="button" class="btn-primary btn-marigold" id="btn-check-checkpoint-answer">
+                <span>Check my answer →</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- STATE 2: CORRECT ANSWER (Calm, Moss Green, Mastery Counter) -->
+          <div class="checkpoint-correct-state" id="checkpoint-state-correct">
+            <h2 class="correct-state-header">Exactly.</h2>
+            <p style="font-size: 1.05rem; color: #29251F; line-height: 1.5;">
+              As resistance increases, current decreases when voltage remains constant.
+            </p>
+
+            <div class="correct-formula-badge">
+              I = V / R
+            </div>
+
+            <div class="mastery-increment-box">
+              <span>Your understanding of this concept is improving:</span>
+              <span class="mastery-count-pill" id="mastery-display-pill">Resistance 68% → 78%</span>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <span style="font-size: 0.8125rem; color: #71886B;">✓ Checkpoint passed. Resuming lesson pacing.</span>
+              <button type="button" class="btn-primary" id="btn-correct-continue">
+                <span>Continue to Voltage →</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- STATE 3: ADAPTIVE TEACHING STATE (Misconception: Water-Pipe Analogy) -->
+          <div class="checkpoint-misconception-state" id="checkpoint-state-misconception">
+            <h2 class="misconception-heading">Let's look at this another way.</h2>
+            <p class="misconception-subhead">I noticed a small misunderstanding.</p>
+
+            <div class="misconception-insight-card">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.35rem;">
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #766E63;">CONCEPT: RESISTANCE</span>
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #B86D52;">YOUR ANSWER: "CURRENT INCREASES"</span>
+              </div>
+              <p>
+                <strong>Teacher observation:</strong> "The relationship between resistance and current appears reversed. Let's switch from formal algebra to physical intuition."
+              </p>
+            </div>
+
+            <div class="visual-comparison-grid">
+              <div class="comparison-box">
+                <span class="comparison-badge">Original Approach</span>
+                <h4 class="comparison-title">Formula: I = V / R</h4>
+                <p class="comparison-desc">Abstract algebraic quotient that felt counter-intuitive.</p>
+              </div>
+
+              <div class="comparison-box new-approach">
+                <span class="comparison-badge" style="color: #D79A4B;">New Approach</span>
+                <h4 class="comparison-title">Water-Pipe Analogy</h4>
+                <p class="comparison-desc">Water flowing through a narrow vs wide pipe: a narrower constriction (higher resistance) restricts water flow.</p>
+              </div>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <div class="teacher-adapted-label">
+                <span class="tiny-marigold-dot"></span>
+                <span>Teacher adapted the lesson</span>
+              </div>
+              <button type="button" class="btn-primary btn-marigold" id="btn-try-waterpipe-analogy">
+                <span>Try a different explanation →</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- =======================================================================
+         DEVELOPER / JUDGE "TEACHER BRAIN" SIDE INSPECTOR PANEL
+         Transparent educator cognitive state
+         ======================================================================= -->
+    <aside class="teacher-brain-drawer" id="teacher-brain-drawer" aria-label="Teacher Brain Inspector">
+      <div class="brain-header-bar">
+        <div>
+          <h3 class="brain-title">Teacher Brain</h3>
+          <span style="font-size: 0.6875rem; color: #766E63;">Cognitive Calibration Inspector</span>
+        </div>
+        <button type="button" class="modal-close-btn" id="btn-close-teacher-brain" aria-label="Close Inspector">✕</button>
+      </div>
+
+      <div class="brain-data-block">
+        <span class="brain-data-label">Status</span>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span class="tiny-marigold-dot"></span>
+          <span class="brain-data-val">Teaching · Adaptive mode</span>
+        </div>
+      </div>
+
+      <div class="brain-data-block">
+        <span class="brain-data-label">Current Concept</span>
+        <span class="brain-data-val">Resistance</span>
+      </div>
+
+      <div class="brain-data-block">
+        <span class="brain-data-label">Student Mastery</span>
+        <span class="brain-data-val" style="color: #D79A4B;">42%</span>
+      </div>
+
+      <div class="brain-data-block">
+        <span class="brain-data-label">Detected Misconception</span>
+        <span class="brain-data-val" style="color: #B86D52;">Inverse relationship confusion</span>
+      </div>
+
+      <div class="brain-data-block">
+        <span class="brain-data-label">Model Confidence</span>
+        <span class="brain-data-val" style="color: #71886B;">94%</span>
+      </div>
+
+      <div class="brain-decision-banner">
+        <span class="brain-data-label" style="color: #B86D52;">Teaching Decision</span>
+        <div class="brain-decision-val">RE-EXPLAIN</div>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #766E63;">Strategy: Water-pipe analogy</span>
+      </div>
+
+      <div class="brain-data-block">
+        <span class="brain-data-label">Pedagogical Reason</span>
+        <p style="font-size: 0.8125rem; color: #29251F; line-height: 1.5;">
+          "Student understands voltage and current individually but reversed their relationship with resistance."
+        </p>
+      </div>
+
+      <div class="brain-data-block">
+        <span class="brain-data-label">Next Action</span>
+        <span class="brain-data-val" style="font-size: 0.8125rem;">Ask a new conceptual question</span>
+      </div>
+
+      <div class="brain-data-block">
+        <span class="brain-data-label">Knowledge Source</span>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #766E63;">Chapter 4 · Page 12</span>
+      </div>
+    </aside>
+
+    <!-- =======================================================================
+         CONTEXTUAL AI TEACHER ASSISTANCE INTERFACE ("ASK YOUR TEACHER")
+         Grounded in lesson, not generic chatbot
+         ======================================================================= -->
+    <div class="contextual-ask-dock" id="contextual-ask-dock">
+      <button type="button" class="ask-teacher-trigger-btn" id="btn-toggle-ask-dock">
+        <span>💬 Ask your teacher</span>
+      </button>
+
+      <div class="ask-dialog-bubble" id="ask-dialog-bubble">
+        <div class="ask-bubble-header">
+          <strong style="font-family: 'Fraunces', serif; font-size: 1.1rem; color: #29251F;">Ask your teacher</strong>
+          <span class="context-indicator-tag">Context: Resistance · Lesson 2</span>
+        </div>
+
+        <div style="background: #F7F1E7; padding: 0.85rem; border-radius: 8px; font-size: 0.8125rem; color: #766E63;">
+          <em>"I still don't understand why current decreases when resistance goes up."</em>
+        </div>
+
+        <div style="background: #FFF9F0; border-left: 2px solid #D79A4B; padding: 0.85rem; font-size: 0.8125rem; color: #29251F;">
+          <strong>Dr. Aris:</strong> "Let's use the water-pipe example again. Think of resistance as pebbles inside the pipe blocking the flow."
+        </div>
+
+        <div>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; color: #766E63; text-transform: uppercase; display: block; margin-bottom: 0.4rem;">
+            Would you like me to...
+          </span>
+          <div class="ask-quick-actions-row">
+            <button type="button" class="ask-action-pill" id="ask-act-explain">Explain differently</button>
+            <button type="button" class="ask-action-pill" id="ask-act-example">Show an example</button>
+            <button type="button" class="ask-action-pill" id="ask-act-question">Give me a question</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- =========================================================================
+       SCREEN 7: FINAL ASSESSMENT SCREEN
+       One question at a time, 8 warm progress dots
+       ========================================================================= -->
+  <div class="screen-view" id="view-assessment">
+    <div class="assessment-container">
+      
+      <div class="assessment-top-meta">
+        <div>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #B86D52; text-transform: uppercase;">
+            Adaptive Mastery Check
+          </span>
+          <h2 style="font-family: 'Fraunces', serif; font-size: 1.5rem; color: #29251F;">Let's see what you understood.</h2>
+          <p style="font-size: 0.875rem; color: #766E63;">Your teacher will use this assessment to decide what you should learn next.</p>
+        </div>
+
+        <!-- 8 Warm Dots Progress Indicator -->
+        <div style="text-align: right;">
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #766E63; display: block; margin-bottom: 0.4rem;" id="assess-counter-text">
+            Question 3 of 8
+          </span>
+          <div class="dots-progress-wrapper" id="assess-dots-container">
+            <span class="assess-dot answered"></span>
+            <span class="assess-dot answered"></span>
+            <span class="assess-dot current"></span>
+            <span class="assess-dot"></span>
+            <span class="assess-dot"></span>
+            <span class="assess-dot"></span>
+            <span class="assess-dot"></span>
+            <span class="assess-dot"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="topic-prompt-card" style="margin-bottom: 2rem;">
+        <h3 class="assess-question-title" id="assess-question-title">
+          "Which relationship correctly describes Ohm's Law?"
+        </h3>
+
+        <div class="checkpoint-answers-grid" style="grid-template-columns: 1fr;" id="assess-options-list">
+          <button type="button" class="checkpoint-choice-btn" data-choice="A">
+            <span class="checkpoint-choice-key">A</span>
+            <span>I = V × R</span>
+          </button>
+          <button type="button" class="checkpoint-choice-btn selected" data-choice="B">
+            <span class="checkpoint-choice-key">B</span>
+            <span>V = I × R</span>
+          </button>
+          <button type="button" class="checkpoint-choice-btn" data-choice="C">
+            <span class="checkpoint-choice-key">C</span>
+            <span>R = V × I</span>
+          </button>
+          <button type="button" class="checkpoint-choice-btn" data-choice="D">
+            <span class="checkpoint-choice-key">D</span>
+            <span>I = R / V</span>
+          </button>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end;">
+        <button type="button" class="btn-primary btn-marigold" id="btn-assess-submit" style="padding: 0.85rem 2rem;">
+          <span>Check my answer →</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       SCREEN 8: PREMIUM LEARNING REPORT
+       Editorial, Calm, No Dashboard Widgets
+       ========================================================================= -->
+  <div class="screen-view" id="view-report">
+    <div class="learning-report-stage">
+      
+      <div class="report-header">
+        <h1 class="report-heading">You've got the foundations.</h1>
+        <p class="report-subhead">
+          You understand Current and Voltage well. Resistance and Ohm's Law need a little more practice.
+        </p>
+      </div>
+
+      <div class="report-score-block">
+        <div class="report-big-score">82%</div>
+        <div>
+          <span class="report-score-label">Lesson understanding</span>
+          <p style="font-size: 0.875rem; color: #766E63; margin-top: 0.25rem;">
+            Calculated across conceptual checkpoints, analogies, and active recall checks.
+          </p>
+        </div>
+      </div>
+
+      <div class="report-columns-grid">
+        <div class="report-col-card strong">
+          <span class="report-col-title">STRONG AREAS</span>
+          <ul class="report-topic-list">
+            <li class="report-topic-item"><span style="color: #71886B;">✓</span> Current (Rate of Charge)</li>
+            <li class="report-topic-item"><span style="color: #71886B;">✓</span> Voltage (Potential Difference)</li>
+            <li class="report-topic-item"><span style="color: #71886B;">✓</span> Circuit basics & Closed Loops</li>
+          </ul>
+        </div>
+
+        <div class="report-col-card practice">
+          <span class="report-col-title">NEEDS PRACTICE</span>
+          <ul class="report-topic-list">
+            <li class="report-topic-item"><span style="color: #B86D52;">●</span> Resistance (Material Friction)</li>
+            <li class="report-topic-item"><span style="color: #B86D52;">●</span> Ohm's Law Inverse Equations</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="report-teacher-observation">
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #D79A4B; text-transform: uppercase; display: block; margin-bottom: 0.4rem;">
+          Your teacher noticed
+        </span>
+        <p style="font-family: 'Fraunces', serif; font-size: 1.2rem; color: #29251F; line-height: 1.5;">
+          "You understand the main formulas, but sometimes reverse the relationship between resistance and current."
+        </p>
+      </div>
+
+      <div class="report-rec-card">
+        <div>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; color: #B86D52; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 0.25rem;">
+            Recommended Next Step
+          </span>
+          <h3 style="font-family: 'Fraunces', serif; font-size: 1.6rem; color: #29251F; margin-bottom: 0.25rem;">
+            Revise Ohm's Law
+          </h3>
+          <p style="font-size: 0.875rem; color: #766E63;">
+            5 minutes · Targeted revision with water-pipe tactile demonstrations
+          </p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 0.5rem; flex-shrink: 0;">
+          <button type="button" class="btn-primary btn-marigold" id="btn-start-targeted-revision" data-screen-target="learning-path">
+            <span>Start targeted revision →</span>
+          </button>
+          <button type="button" class="btn-secondary" data-screen-target="player" style="border: none; background: transparent; font-size: 0.8125rem;">
+            <span>View full lesson</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       SCREEN 9: PERSONALIZED LEARNING PATH
+       Route drawn like a notebook with clickable nodes
+       ========================================================================= -->
+  <div class="screen-view" id="view-learning-path">
+    <div class="learning-path-notebook-stage">
+      
+      <h1 style="font-family: 'Fraunces', serif; font-size: 2.75rem; color: #29251F; margin-bottom: 0.5rem;">
+        Your learning path
+      </h1>
+      <p style="font-size: 1.05rem; color: #766E63;">
+        Built around what you know and what you need next.
+      </p>
+
+      <div class="path-notebook-tree">
+        <div class="path-tree-vertical-line"></div>
+
+        <div class="path-tree-node completed" data-path-node="foundations">
+          <span class="node-bullet"></span>
+          <strong>Foundations</strong>
+          <span style="color: #71886B;">✓</span>
+        </div>
+
+        <div class="path-tree-node completed" data-path-node="current">
+          <span class="node-bullet"></span>
+          <strong>Current</strong>
+          <span style="color: #71886B;">✓</span>
+        </div>
+
+        <div class="path-tree-node completed" data-path-node="voltage">
+          <span class="node-bullet"></span>
+          <strong>Voltage</strong>
+          <span style="color: #71886B;">✓</span>
+        </div>
+
+        <div class="path-tree-node current" data-path-node="resistance">
+          <span class="node-bullet"></span>
+          <strong>Resistance</strong>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.6875rem; color: #B86D52;">Active Focus</span>
+        </div>
+
+        <div class="path-tree-node upcoming" data-path-node="ohms-law">
+          <span class="node-bullet"></span>
+          <span>Ohm's Law</span>
+        </div>
+
+        <div class="path-tree-node upcoming" data-path-node="circuit-analysis">
+          <span class="node-bullet"></span>
+          <span>Circuit Analysis</span>
+        </div>
+
+        <div class="path-tree-node upcoming" data-path-node="applications">
+          <span class="node-bullet"></span>
+          <span>Applications</span>
+        </div>
+      </div>
+
+      <!-- Contextual Node Drawer -->
+      <div class="node-popup-panel" id="node-context-panel">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem;">
+          <h3 style="font-family: 'Fraunces', serif; font-size: 1.35rem; color: #29251F;" id="path-pop-title">Resistance</h3>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; color: #D79A4B;" id="path-pop-mastery">42% mastery</span>
+        </div>
+        <p style="font-size: 0.875rem; color: #766E63; margin-bottom: 1rem;" id="path-pop-desc">
+          2 concepts understood · 1 misconception detected (inverse current relationship).
+        </p>
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <span style="font-size: 0.8125rem; color: #B86D52;">Recommended: 5-minute revision</span>
+          <button type="button" class="btn-primary btn-marigold" data-screen-target="player" style="padding: 0.5rem 1rem; font-size: 0.8125rem;">
+            <span>Revise this concept →</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       SCREEN 10: MATERIAL LIBRARY
+       Clean horizontal document rows with thumbnails
+       ========================================================================= -->
+  <div class="screen-view" id="view-library">
+    <div class="library-stage-container">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2rem;">
+        <div>
+          <h1 style="font-family: 'Fraunces', serif; font-size: 2.5rem; color: #29251F; margin-bottom: 0.25rem;">Your library</h1>
+          <p style="font-size: 1rem; color: #766E63;">Everything your teacher has learned with you.</p>
+        </div>
+        <button type="button" class="btn-primary btn-marigold" data-screen-target="create-lesson">
+          <span>+ Add material</span>
+        </button>
+      </div>
+
+      <input type="text" class="library-search-bar" placeholder="Search your materials..." id="library-search" />
+
+      <div class="library-filter-chips">
+        <button type="button" class="choice-chip is-selected">All</button>
+        <button type="button" class="choice-chip">Books</button>
+        <button type="button" class="choice-chip">PDFs</button>
+        <button type="button" class="choice-chip">Notes</button>
+        <button type="button" class="choice-chip">Presentations</button>
+      </div>
+
+      <div class="library-docs-list" id="library-docs-list">
+        <div class="doc-row-item" data-screen-target="player">
+          <div class="doc-row-left">
+            <div class="doc-paper-thumbnail">PDF</div>
+            <div>
+              <h4 style="font-size: 1rem; font-weight: 600; color: #29251F;">Electricity & Magnetism</h4>
+              <span style="font-size: 0.8125rem; color: #766E63;">PDF • 12 chapters • Last studied yesterday</span>
+            </div>
+          </div>
+          <span style="font-size: 0.875rem; color: #B86D52; font-weight: 600;">Open lesson →</span>
+        </div>
+
+        <div class="doc-row-item" data-screen-target="player">
+          <div class="doc-row-left">
+            <div class="doc-paper-thumbnail">PDF</div>
+            <div>
+              <h4 style="font-size: 1rem; font-weight: 600; color: #29251F;">Machine Learning Fundamentals</h4>
+              <span style="font-size: 0.8125rem; color: #766E63;">PDF • 8 chapters • Last studied 3 days ago</span>
+            </div>
+          </div>
+          <span style="font-size: 0.875rem; color: #B86D52; font-weight: 600;">Open lesson →</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       SCREEN 11: PROGRESS PAGE
+       3 simple metrics, warm line chart, improvement tags
+       ========================================================================= -->
+  <div class="screen-view" id="view-progress">
+    <div class="progress-stage-container">
+      <h1 style="font-family: 'Fraunces', serif; font-size: 2.75rem; color: #29251F; margin-bottom: 0.25rem;">Your progress</h1>
+      <p style="font-size: 1rem; color: #766E63; margin-bottom: 2.5rem;">See how your understanding is changing over time.</p>
+
+      <div class="progress-three-metrics-row">
+        <div class="progress-metric-block">
+          <span class="metric-label-clean">Concepts Mastered</span>
+          <div class="metric-number-large">42</div>
+        </div>
+        <div class="progress-metric-block">
+          <span class="metric-label-clean">Lessons Completed</span>
+          <div class="metric-number-large">18</div>
+        </div>
+        <div class="progress-metric-block">
+          <span class="metric-label-clean">Learning Time</span>
+          <div class="metric-number-large">7h 24m</div>
+        </div>
+      </div>
+
+      <div class="progress-chart-card">
+        <span class="metric-label-clean" style="margin-bottom: 1rem;">Concept Mastery Over Time</span>
+        <svg class="chart-svg-warm" viewBox="0 0 500 120" fill="none">
+          <line x1="0" y1="100" x2="500" y2="100" stroke="#DED4C5" stroke-dasharray="4" />
+          <path d="M 10 90 Q 120 70 200 45 T 380 30 T 490 15" stroke="#D79A4B" stroke-width="3" fill="none" />
+          <circle cx="200" cy="45" r="4" fill="#D79A4B" />
+          <circle cx="380" cy="30" r="4" fill="#D79A4B" />
+          <circle cx="490" cy="15" r="5" fill="#71886B" />
+        </svg>
+      </div>
+
+      <div class="report-columns-grid">
+        <div class="report-col-card practice">
+          <span class="report-col-title">CONCEPTS TO REVISIT</span>
+          <ul class="report-topic-list">
+            <li class="report-topic-item" style="justify-content: space-between;">
+              <span>Resistance</span>
+              <strong style="font-family: 'JetBrains Mono'; color: #B86D52;">42%</strong>
+            </li>
+            <li class="report-topic-item" style="justify-content: space-between;">
+              <span>Ohm's Law</span>
+              <strong style="font-family: 'JetBrains Mono'; color: #B86D52;">38%</strong>
+            </li>
+            <li class="report-topic-item" style="justify-content: space-between;">
+              <span>Neural Networks</span>
+              <strong style="font-family: 'JetBrains Mono'; color: #B86D52;">51%</strong>
+            </li>
+          </ul>
+        </div>
+
+        <div class="report-col-card strong">
+          <span class="report-col-title">RECENT IMPROVEMENT</span>
+          <ul class="report-topic-list">
+            <li class="report-topic-item" style="justify-content: space-between;">
+              <span>Current</span>
+              <span style="font-family: 'JetBrains Mono'; color: #71886B; font-weight: 600;">61% → 91%</span>
+            </li>
+            <li class="report-topic-item" style="justify-content: space-between;">
+              <span>Voltage</span>
+              <span style="font-family: 'JetBrains Mono'; color: #71886B; font-weight: 600;">54% → 84%</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       SCREEN 12: MINIMAL SETTINGS PAGE
+       Elegant list layout, no heavy cards
+       ========================================================================= -->
+  <div class="screen-view" id="view-settings">
+    <div class="settings-stage-container">
+      <h1 style="font-family: 'Fraunces', serif; font-size: 2.75rem; color: #29251F; margin-bottom: 2rem;">Your learning space</h1>
+
+      <div class="settings-section-block">
+        <span class="settings-section-title">Teacher</span>
+        <div class="settings-list-rows">
+          <div class="settings-row">
+            <div>
+              <div class="setting-title">Teacher personality</div>
+              <div class="setting-desc">Calm · Encouraging · Socratic</div>
+            </div>
+            <button type="button" class="choice-chip is-selected" style="padding: 0.35rem 0.85rem; font-size: 0.75rem;">Socratic</button>
+          </div>
+          <div class="settings-row">
+            <div>
+              <div class="setting-title">Voice</div>
+              <div class="setting-desc">Natural warm tone for explanations</div>
+            </div>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; color: #D79A4B;">Natural Female</span>
+          </div>
+          <div class="settings-row">
+            <div>
+              <div class="setting-title">Avatar</div>
+              <div class="setting-desc">Dr. Aris (Physics & Foundations)</div>
+            </div>
+            <button type="button" class="choice-chip" style="padding: 0.35rem 0.85rem; font-size: 0.75rem;">Choose</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-section-block">
+        <span class="settings-section-title">Learning</span>
+        <div class="settings-list-rows">
+          <div class="settings-row">
+            <div>
+              <div class="setting-title">Default language</div>
+              <div class="setting-desc">Preferred conversational language</div>
+            </div>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; color: #D79A4B;">Hinglish</span>
+          </div>
+          <div class="settings-row">
+            <div>
+              <div class="setting-title">Teaching style</div>
+              <div class="setting-desc">Pedagogical ordering preference</div>
+            </div>
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; color: #D79A4B;">Example First</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-section-block">
+        <span class="settings-section-title">Accessibility</span>
+        <div class="settings-list-rows">
+          <div class="settings-row">
+            <div>
+              <div class="setting-title">Captions</div>
+              <div class="setting-desc">Large readable warm charcoal text</div>
+            </div>
+            <span style="color: #71886B; font-weight: 600; font-size: 0.875rem;">On</span>
+          </div>
+          <div class="settings-row">
+            <div>
+              <div class="setting-title">Reduced motion</div>
+              <div class="setting-desc">Minimize springs and smooth sliding</div>
+            </div>
+            <span style="color: #766E63; font-size: 0.875rem;">Off</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       SCREEN 13: MEDIA FALLBACK & SCREEN 14: EMPTY STATE
+       ========================================================================= -->
+  <div class="screen-view" id="view-fallback">
+    <div class="fallback-stage-container">
+      <div class="fallback-paper-card">
+        <h2 style="font-family: 'Fraunces', serif; font-size: 2rem; color: #29251F; margin-bottom: 0.5rem;">
+          Your lesson is ready — the video needs a moment.
+        </h2>
+        <p style="font-size: 0.95rem; color: #766E63; margin-bottom: 2rem;">
+          The teacher video is taking longer than expected, so we'll continue with voice and visual explanations.
+        </p>
+
+        <div style="background: #F7F1E7; border-radius: 8px; padding: 1.25rem; text-align: left; margin-bottom: 2rem; display: flex; flex-direction: column; gap: 0.5rem;">
+          <div style="color: #71886B; font-size: 0.875rem;">✓ Lesson prepared</div>
+          <div style="color: #71886B; font-size: 0.875rem;">✓ Visual explanations ready</div>
+          <div style="color: #D79A4B; font-size: 0.875rem;">● Teacher video processing</div>
+        </div>
+
+        <div style="display: flex; gap: 1rem; justify-content: center;">
+          <button type="button" class="btn-primary btn-marigold" data-screen-target="player">
+            <span>Start learning with audio →</span>
+          </button>
+          <button type="button" class="btn-secondary" data-screen-target="player">
+            <span>Try video again</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-view" id="view-empty">
+    <div class="empty-stage-container">
+      <div class="empty-paper-card">
+        <div class="empty-notebook-illus"></div>
+        <h2 style="font-family: 'Fraunces', serif; font-size: 2rem; color: #29251F; margin-bottom: 0.5rem;">
+          Your study desk is ready.
+        </h2>
+        <p style="font-size: 0.95rem; color: #766E63; margin-bottom: 2rem;">
+          Start with a topic or bring your own learning material.
+        </p>
+
+        <div style="display: flex; gap: 1rem; justify-content: center;">
+          <button type="button" class="btn-primary btn-marigold" data-screen-target="create-lesson">
+            <span>Choose a topic →</span>
+          </button>
+          <button type="button" class="btn-secondary" data-screen-target="create-lesson">
+            <span>Upload material →</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Standard Info Modal -->
+  <div class="modal-backdrop" id="info-modal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title">How AI Teacher Works</h3>
+          <p class="modal-desc">The science of personalized cognitive pacing.</p>
+        </div>
+        <button type="button" class="modal-close-btn" data-close-modal="info-modal" aria-label="Close dialog">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="display: flex; flex-direction: column; gap: 1rem; font-size: 0.875rem; color: #766E63; line-height: 1.6;">
+          <div style="background: #F7F1E7; border: 1px solid #DED4C5; border-radius: 8px; padding: 1rem;">
+            <strong style="color: #29251F; display: block; margin-bottom: 0.25rem;">01 • Diagnosing Mental Models</strong>
+            Unlike static video courses that talk at you, AI Teacher diagnoses what intuitive metaphors you already hold.
+          </div>
+          <div style="background: #F7F1E7; border: 1px solid #DED4C5; border-radius: 8px; padding: 1rem;">
+            <strong style="color: #29251F; display: block; margin-bottom: 0.25rem;">02 • Visual Demonstrations</strong>
+            Formulas are never introduced without physical grounding. Circuits draw themselves; graphs evolve live.
+          </div>
+          <div style="background: #F7F1E7; border: 1px solid #DED4C5; border-radius: 8px; padding: 1rem;">
+            <strong style="color: #29251F; display: block; margin-bottom: 0.25rem;">03 • Socratic Adaptation</strong>
+            After every concept, a quick checkpoint checks understanding and continuously refines the remaining pathway.
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-primary" data-close-modal="info-modal" style="width: 100%; justify-content: center;">
+          <span>Understood</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="desk-toast" id="desk-toast" aria-live="polite">
+    <span id="toast-text">Warm study desk ready.</span>
+  </div>
+
+  <script src="app.js?v=12"></script>
+</body>
+</html>
