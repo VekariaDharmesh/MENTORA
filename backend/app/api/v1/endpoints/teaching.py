@@ -1,7 +1,3 @@
-"""
-Teaching Engine, Checkpoints & Teacher Brain Endpoints
-"""
-
 from fastapi import APIRouter, Depends
 from app.core.deps import get_teaching_machine, get_learner_service
 from app.teaching.state_machine import TeachingStateMachine
@@ -19,8 +15,13 @@ async def submit_checkpoint_answer(
     """
     Evaluates student answer, updates mastery or triggers adaptive misconception state.
     """
-    result = teaching_machine.evaluate_checkpoint(payload.choice, concept=payload.concept)
-    learner_service.update_mastery("resistance", is_correct=result["is_correct"])
+    result = await teaching_machine.evaluate_checkpoint(
+        choice=payload.choice,
+        concept=payload.concept,
+        question=payload.question,
+        correct_option=payload.correct_option
+    )
+    learner_service.update_mastery(payload.concept, is_correct=result.get("is_correct", False))
     return result
 
 @router.get("/teaching/brain-inspect", tags=["Teacher Brain"])

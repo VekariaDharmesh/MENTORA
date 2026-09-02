@@ -792,12 +792,21 @@
       btnCheckAnswer?.addEventListener('click', async () => {
         checkpointStateQuestion.style.display = 'none';
 
+        const qText = document.querySelector('.checkpoint-question-heading')?.textContent.trim() || "What happens to current if resistance increases while voltage stays constant?";
+        const correctOption = "B";
+        const concept = document.querySelector('.canvas-tag')?.textContent || 'Resistance';
+
         // Query Live FastAPI Backend
         try {
           const resp = await fetch('http://localhost:8000/api/v1/teaching/checkpoint/answer', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ choice: selectedCheckpointChoice, concept: 'Resistance' })
+            body: JSON.stringify({ 
+              choice: selectedCheckpointChoice, 
+              concept: concept,
+              question: qText,
+              correct_option: correctOption
+            })
           });
           if (resp.ok) {
             const data = await resp.json();
@@ -806,14 +815,18 @@
               showToast('Exactly! Evaluated by AI Teaching Engine.');
             } else {
               checkpointStateMisconception.classList.add('active');
-              showToast(`Misconception diagnosed: ${data.misconception_category}`);
+              showToast(`Misconception diagnosed: ${data.misconception_category || data.detected_misconception}`);
               const brainDecisionVal = document.querySelector('.brain-decision-val');
               if (brainDecisionVal) brainDecisionVal.textContent = 'ADAPTIVE INTERVENTION';
+              
+              const p_reason = document.querySelector('.brain-reasoning');
+              if (p_reason) p_reason.textContent = data.teacher_observation || 'Misconception detected.';
             }
             return;
           }
         } catch (e) {
           // Graceful fallback if offline
+          console.error(e);
         }
 
         if (selectedCheckpointChoice === 'B') {
@@ -902,10 +915,19 @@
             const resp = await fetch('http://localhost:8000/api/v1/teaching/brain-inspect');
             if (resp.ok) {
               const data = await resp.json();
-              const decisionVal = teacherBrainDrawer.querySelector('.brain-decision-val');
-              if (decisionVal) decisionVal.textContent = data.decision;
+              if (document.getElementById('brain-decision')) document.getElementById('brain-decision').textContent = data.decision || 'ADVANCE';
+              if (document.getElementById('brain-active-concept')) document.getElementById('brain-active-concept').textContent = data.current_concept || 'None';
+              if (document.getElementById('brain-mastery')) document.getElementById('brain-mastery').textContent = `${data.student_mastery_pct || 0}%`;
+              if (document.getElementById('brain-confidence')) document.getElementById('brain-confidence').textContent = `${data.confidence_pct || 0}%`;
+              if (document.getElementById('brain-misconception')) document.getElementById('brain-misconception').textContent = data.detected_misconception || 'None';
+              if (document.getElementById('brain-strategy')) document.getElementById('brain-strategy').textContent = `Strategy: ${data.strategy || 'Standard'}`;
+              if (document.getElementById('brain-reason')) document.getElementById('brain-reason').textContent = data.reason || 'Proceeding normally.';
+              if (document.getElementById('brain-next-action')) document.getElementById('brain-next-action').textContent = data.next_action || 'Continue';
+              if (document.getElementById('brain-source')) document.getElementById('brain-source').textContent = data.knowledge_source || 'Knowledge Graph';
             }
-          } catch (e) {}
+          } catch (e) {
+            console.error(e);
+          }
           showToast('Teacher Brain Inspector open: viewing real-time pedagogical decisions.');
         } else {
           teacherBrainDrawer.classList.remove('open');

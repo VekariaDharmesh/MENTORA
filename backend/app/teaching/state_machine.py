@@ -1,9 +1,5 @@
-"""
-Teaching Engine State Machine & Socratic Evaluator
-Governs the pedagogical loop: Understand -> Plan -> Explain -> Demonstrate -> Question -> Evaluate -> Adapt -> Continue
-"""
-
 from typing import Dict, Any, Optional
+from app.services.llm_service import LLMService
 
 class TeachingState:
     INIT = "INIT"
@@ -19,72 +15,88 @@ class TeachingState:
     COMPLETE = "COMPLETE"
 
 class TeachingStateMachine:
-    def __init__(self, lesson_id: str = "demo_lesson"):
-        self.lesson_id = lesson_id
+    def __init__(self, llm_service: LLMService):
+        self.lesson_id = None
         self.current_state = TeachingState.EXPLAIN
-        self.current_concept = "Resistance"
-        self.current_segment_index = 3
-        self.active_strategy = "formula"
-        self.active_visual = "circuit"
+        self.current_concept = ""
+        self.llm_service = llm_service
         self.teacher_brain_state = {
-            "status": "Teaching · Adaptive mode",
-            "current_concept": "Resistance",
-            "student_mastery_pct": 42,
-            "confidence_pct": 94,
-            "detected_misconception": "Inverse relationship confusion",
-            "decision": "RE-EXPLAIN",
-            "strategy": "Water-pipe analogy",
-            "reason": "Student understands voltage and current individually but reversed their relationship with resistance.",
-            "next_action": "Ask a new conceptual question",
-            "knowledge_source": "Chapter 4 · Page 12"
+            "status": "Teaching · Active",
+            "current_concept": "",
+            "student_mastery_pct": 50,
+            "confidence_pct": 0,
+            "detected_misconception": "None",
+            "decision": "ADVANCE",
+            "strategy": "Explain",
+            "reason": "Proceeding with standard curriculum.",
+            "next_action": "Wait for student response",
+            "knowledge_source": "Topic Profile"
         }
 
-    def evaluate_checkpoint(self, choice: str, concept: str = "Resistance") -> Dict[str, Any]:
+    async def evaluate_checkpoint(self, choice: str, concept: str, question: str, correct_option: str) -> Dict[str, Any]:
         """
-        Evaluates the student's checkpoint response.
-        Option B = Correct ("It decreases")
-        Option A = Misconception ("It increases")
+        Dynamically evaluates the student's checkpoint response using the LLM and deterministic state machine.
         """
         self.current_state = TeachingState.EVALUATE
-        choice_upper = choice.strip().upper()
-
-        if choice_upper == "B":
+        self.current_concept = concept
+        
+        # Use LLM to diagnose response dynamically
+        eval_result = await self.llm_service.evaluate_student_answer(
+            concept=concept,
+            question=question,
+            student_answer=choice,
+            correct_option=correct_option
+        )
+        
+        is_correct = eval_result.get("is_correct", False)
+        
+        if is_correct:
             self.current_state = TeachingState.ADVANCE
-            self.teacher_brain_state["decision"] = "ADVANCE"
-            self.teacher_brain_state["next_action"] = "Advance to Ohm's Law Unified Model"
-            self.teacher_brain_state["student_mastery_pct"] = 78
+            self.teacher_brain_state.update({
+                "decision": "ADVANCE",
+                "next_action": "Advance to next concept",
+                "student_mastery_pct": min(100, self.teacher_brain_state["student_mastery_pct"] + int(eval_result.get("mastery_delta", 0.1) * 100)),
+                "confidence_pct": 90,
+                "detected_misconception": "None",
+                "reason": "Student demonstrated correct understanding."
+            })
 
             return {
                 "is_correct": True,
-                "correct_option": "B",
+                "correct_option": correct_option,
                 "concept": concept,
-                "heading": "Exactly.",
-                "explanation": "As resistance increases, current decreases when voltage remains constant.",
-                "formula": "I = V / R",
-                "mastery_before": 68,
-                "mastery_after": 78,
-                "next_action": "Continue to Voltage →",
+                "heading": eval_result.get("heading", "Exactly."),
+                "explanation": eval_result.get("feedback", "Great job."),
+                "mastery_before": self.teacher_brain_state["student_mastery_pct"] - 10,
+                "mastery_after": self.teacher_brain_state["student_mastery_pct"],
+                "next_action": "Continue to next concept →",
                 "next_state": TeachingState.ADVANCE
             }
         else:
             self.current_state = TeachingState.REMEDIATE
-            self.active_strategy = "water_pipe_analogy"
-            self.active_visual = "water_pipe"
-            self.teacher_brain_state["decision"] = "RE-EXPLAIN"
-            self.teacher_brain_state["strategy"] = "Water-pipe analogy"
-            self.teacher_brain_state["student_mastery_pct"] = 42
+            strategy = eval_result.get("strategy", "Analogy")
+            misconception = eval_result.get("misconception", "Unknown error")
+            
+            self.teacher_brain_state.update({
+                "decision": "RE-EXPLAIN",
+                "strategy": strategy,
+                "student_mastery_pct": max(0, self.teacher_brain_state["student_mastery_pct"] - 5),
+                "detected_misconception": misconception,
+                "reason": f"Detected: {misconception}",
+                "next_action": "Provide new adapted explanation"
+            })
 
             return {
                 "is_correct": False,
-                "correct_option": "B",
+                "correct_option": correct_option,
                 "concept": concept,
-                "heading": "Let's look at this another way.",
+                "heading": eval_result.get("heading", "Let's look at this another way."),
                 "subheading": "I noticed a small misunderstanding.",
-                "student_answer": "Current increases",
-                "teacher_observation": "The relationship between resistance and current appears reversed.",
-                "misconception_category": "concept_reversal",
-                "original_approach": "Formula: I = V / R",
-                "new_approach": "Water-pipe analogy (narrow vs wide pipe)",
+                "student_answer": choice,
+                "teacher_observation": eval_result.get("feedback", "The relationship appears misunderstood."),
+                "misconception_category": misconception,
+                "original_approach": "Standard Explanation",
+                "new_approach": strategy,
                 "adapted_label": "Teacher adapted the lesson",
                 "next_action": "Try a different explanation →",
                 "next_state": TeachingState.REMEDIATE

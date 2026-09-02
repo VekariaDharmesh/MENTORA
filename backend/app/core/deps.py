@@ -26,7 +26,7 @@ assessment_service = AssessmentEngineService()
 advanced_service = AdvancedFeaturesService()
 support_service = ProductionSupportService()
 llm_service = LLMService()
-teaching_machine = TeachingStateMachine()
+teaching_machine = TeachingStateMachine(llm_service)
 
 def get_llm_service() -> LLMService:
     return llm_service
