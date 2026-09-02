@@ -93,16 +93,6 @@
         });
       });
 
-      // Hash change listener
-      window.addEventListener('hashchange', () => {
-        const hash = window.location.hash.replace('#', '');
-        if (views[hash]) switchScreen(hash);
-      });
-
-      // Initial route
-      const initialHash = window.location.hash.replace('#', '') || 'landing';
-      switchScreen(initialHash);
-
       // Toast helper
       const toast = document.getElementById('desk-toast');
       const toastText = document.getElementById('toast-text');
@@ -117,6 +107,16 @@
           toast.classList.remove('is-visible');
         }, duration);
       }
+
+      // Hash change listener
+      window.addEventListener('hashchange', () => {
+        const hash = window.location.hash.replace('#', '');
+        if (views[hash]) switchScreen(hash);
+      });
+
+      // Initial route
+      const initialHash = window.location.hash.replace('#', '') || 'landing';
+      switchScreen(initialHash);
 
       // ----------------------------------------------------------------------
       // 2. MODAL CONTROLLER
