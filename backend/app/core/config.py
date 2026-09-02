@@ -7,7 +7,7 @@ from typing import List
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "AI Teacher Engine API"
+    PROJECT_NAME: str = "MENTORE Engine API"
     VERSION: str = "1.0.0"
     API_V1_STR: str = "/api/v1"
     ENVIRONMENT: str = "development"

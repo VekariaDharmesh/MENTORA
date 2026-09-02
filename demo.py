@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-AI Teacher — Automated End-to-End Terminal Demo
+MENTORE — Automated End-to-End Terminal Demo
 Demonstrates the full pedagogical cycle:
 1. Ingest document & chunk
 2. Query prerequisite concept graph

@@ -1,4 +1,4 @@
-# AI Teacher — Pitch Deck & Judge Presentation Guide
+# MENTORE — Pitch Deck & Judge Presentation Guide
 
 ## 1. The Core Problem
 1. **Passive Video Watching**: 92% of students drop out of online courses because pre-recorded videos cannot pause, detect confusion, or answer questions.
@@ -7,7 +7,7 @@
 
 ---
 
-## 2. Our Solution: The "Warm Study Desk" AI Teacher
+## 2. Our Solution: The "Warm Study Desk" MENTORE
 A calm, distraction-free digital study desk with a patient, living academic mentor (Dr. Aris).
 
 Instead of treating the LLM as the entire backend, we built a **technically defensible cognitive engine**:

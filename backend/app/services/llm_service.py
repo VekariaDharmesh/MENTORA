@@ -28,7 +28,7 @@ class LLMService:
         Dynamically generates structured multi-segment pedagogical lesson plan.
         """
         prompt = f"""
-        You are Dr. Aris, an empathetic and academic educator on the "Warm Study Desk" AI Teacher platform.
+        You are Dr. Aris, an empathetic and academic educator on the "Warm Study Desk" MENTORE platform.
         Create a {duration_minutes}-minute lesson plan on "{topic}" for a {level} learner in {language}.
         Grounded context: {context or "Fundamental physics and principles"}
         

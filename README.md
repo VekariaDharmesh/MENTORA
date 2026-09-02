@@ -1,4 +1,4 @@
-# AI Tutor — Warm Study Desk Educational Platform
+# MENTORE — Warm Study Desk Educational Platform
 
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-00a393.svg)](https://fastapi.tiangolo.com)
@@ -9,7 +9,7 @@
 ## 🌟 The Core Philosophy: "Warm Study Desk"
 Education should feel like sitting at a calm, sunlit physical wooden study desk with a patient academic mentor — not a noisy, neon SaaS dashboard. 
 
-The **AI Tutor** avoids generic AI chatbots. Instead, it utilizes a **multi-engine cognitive architecture**:
+The **MENTORE** avoids generic AI chatbots. Instead, it utilizes a **multi-engine cognitive architecture**:
 $$\text{\bfseries LLM} \;+\; \text{\bfseries Pedagogical State Machine} \;+\; \text{\bfseries Concept Graph RAG} \;+\; \text{\bfseries Bayesian Learner Model} \;+\; \text{\bfseries Dynamic Media Engine}$$
 
 ---

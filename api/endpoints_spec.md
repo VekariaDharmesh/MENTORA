@@ -1,4 +1,4 @@
-# AI Teacher — REST API Specification (V1)
+# MENTORE — REST API Specification (V1)
 
 **Base URL**: `http://localhost:8000/api/v1`  
 **OpenAPI Specification**: [`api/openapi.json`](file:///Users/vekariadharmeshh/Movies/SSSV/api/openapi.json)  
@@ -16,7 +16,7 @@ Confirms the pedagogical engine status.
 ```json
 {
   "status": "healthy",
-  "engine": "AI Teacher Pedagogical Engine",
+  "engine": "MENTORE Pedagogical Engine",
   "mode": "Socratic Adaptive Mode",
   "version": "1.0.0"
 }

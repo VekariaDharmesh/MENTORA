@@ -1,5 +1,5 @@
 /**
- * AI Teacher — Full Product Suite & Pedagogical Engine
+ * MENTORE — Full Product Suite & Pedagogical Engine
  * Complete end-to-end flow with Checkpoint, Adaptive Misconception, and Teacher Brain
  */
 
@@ -223,8 +223,8 @@
 
       const pipelineTextMap = {
         '1': 'Stage 01 • PDF Ingestion: Drag and drop syllabi, chapters, lecture transcripts, or complex academic papers. The system maps the underlying knowledge graph.',
-        '2': 'Stage 02 • Dynamic Lesson Plan: AI Teacher decomposes the topic into intuitive cognitive milestones, prioritizing physical intuition and foundational metaphors before formulas.',
-        '3': 'Stage 03 • AI Teacher Presentation: Synchronized spoken explanation, live blackboard sketches, and self-drawing diagrams bring abstract concepts into tangible clarity.',
+        '2': 'Stage 02 • Dynamic Lesson Plan: MENTORE decomposes the topic into intuitive cognitive milestones, prioritizing physical intuition and foundational metaphors before formulas.',
+        '3': 'Stage 03 • MENTORE Presentation: Synchronized spoken explanation, live blackboard sketches, and self-drawing diagrams bring abstract concepts into tangible clarity.',
         '4': 'Stage 04 • Socratic Checkpoint: Calibrated questions test depth of comprehension rather than rote memory, verifying your intuitive grasp before proceeding.',
         '5': 'Stage 05 • Real-time Adaptation: If an answer shows hesitation or a misunderstanding, the teacher switches analogies, adjusts pacing, and offers tactile examples.',
         '6': 'Stage 06 • Learning Report: Generates an ongoing visual knowledge graph of mastered concepts and schedules spaced-repetition refreshers for permanent retention.'
@@ -421,7 +421,7 @@
           });
           if (resp.ok) {
             window.activeAILessonPlan = await resp.json();
-            showToast(`AI Teacher generated ${window.activeAILessonPlan.segments?.length || 5} learning segments.`);
+            showToast(`MENTORE generated ${window.activeAILessonPlan.segments?.length || 5} learning segments.`);
           }
         } catch (e) {
           console.warn('Lesson generation fallback active:', e);
@@ -1133,7 +1133,7 @@
       });
 
     } catch (err) {
-      console.warn('AI Teacher Suite engine initialization notice:', err);
+      console.warn('MENTORE Suite engine initialization notice:', err);
     }
   }
 

@@ -1,6 +1,6 @@
 /**
- * AI Teacher — Unified JavaScript API Client SDK
- * Provides typed, asynchronous access to the AI Teacher FastAPI backend with graceful fallbacks.
+ * MENTORE — Unified JavaScript API Client SDK
+ * Provides typed, asynchronous access to the MENTORE FastAPI backend with graceful fallbacks.
  */
 
 const API_BASE_URL = 'http://localhost:8000/api/v1';

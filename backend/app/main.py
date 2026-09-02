@@ -1,5 +1,5 @@
 """
-AI Teacher — Production FastAPI Application Entrypoint
+MENTORE — Production FastAPI Application Entrypoint
 Structured with Clean Architecture & SOLID Software Engineering Principles.
 """
 

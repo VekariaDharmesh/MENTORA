@@ -1,5 +1,5 @@
 """
-Automated Test Suite for AI Teacher API
+Automated Test Suite for MENTORE API
 Tests the complete pedagogical pipeline:
 - System Health
 - Concept Graph & Prerequisites
@@ -157,7 +157,7 @@ if __name__ == "__main__":
         test_teaching_websocket
     ]
     passed = 0
-    print(f"\n[AI Teacher Test Suite] Running {len(tests)} automated tests...")
+    print(f"\n[MENTORE Test Suite] Running {len(tests)} automated tests...")
     for t in tests:
         try:
             t()
@@ -166,7 +166,7 @@ if __name__ == "__main__":
         except Exception as e:
             print(f"  ✗ {t.__name__} FAILED: {e}")
 
-    print(f"\n[AI Teacher Test Suite] Results: {passed}/{len(tests)} tests passed successfully!\n")
+    print(f"\n[MENTORE Test Suite] Results: {passed}/{len(tests)} tests passed successfully!\n")
     if passed == len(tests):
         sys.exit(0)
     else:

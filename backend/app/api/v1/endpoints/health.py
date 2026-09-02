@@ -10,7 +10,7 @@ router = APIRouter()
 async def health_check():
     return {
         "status": "healthy",
-        "engine": "AI Teacher Pedagogical Engine",
+        "engine": "MENTORE Pedagogical Engine",
         "mode": "Socratic Adaptive Mode",
         "version": "1.0.0"
     }
